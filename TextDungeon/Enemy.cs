@@ -15,9 +15,12 @@ namespace TextDungeon
 
         public bool IsAgressive { get; protected set; }
 
-        public Enemy() // konstruktorn 
+        public Enemy(string name, int maxHp, string attackName, int exp, int minMoney, int maxMoney) : base (name, maxHp) //konstruktor för råtta
         {
-
+            AttackName = attackName;
+            Hp = MaxHp;
+            Exp = exp;
+            Money = GetRNG(minMoney, maxMoney);
         }
 
         internal void Reset() //återställer en fiendes värden om den ska återupplivas 
@@ -29,17 +32,11 @@ namespace TextDungeon
 
     public class Rat : Enemy //fiende: råtta 
     {
-        public Rat() //konstruktor för råtta
+        public Rat() : base("Rat", 2, "Nibble", 1, 1, 3) //konstruktor för råtta
         {
-            Name = "Rat";
-            AttackName = "Nibble";
-            MaxHp = 2;
-            Hp = MaxHp;
-            Exp = 1;
-            minMoney = 1;
-            maxMoney = 3;
-            Money = GetRNG(minMoney, maxMoney);
-        }
+
+        } 
+
 
         public override int Attack() // råttans attack 
         {
@@ -50,16 +47,9 @@ namespace TextDungeon
 
     public class Dog : Enemy // fiende: hund
     {
-        public Dog() //konstruktor för hund 
+        public Dog() : base ("Dog", 5, "Bite", 3, 3, 6) //konstruktor för hund 
         {
-            Name = "Dog";
-            AttackName = "Bite";
-            MaxHp = 5;
-            Hp = MaxHp;
-            Exp = 3;
-            minMoney = 3;
-            maxMoney = 6;
-            Money = GetRNG(minMoney, maxMoney);
+
         }
 
         public override int Attack() // hundens attack 
@@ -70,19 +60,10 @@ namespace TextDungeon
 
     public class Ghidorah : Enemy
     {
-        public Ghidorah() //konstruktor för Ghidorah 
+        public Ghidorah() : base("Ghidorah", 100, "Triple bite", 100, 200, 501) //konstruktor för Ghidorah 
         {
-            Name = "Ghidorah";
-            AttackName = "Triple bite";
-            MaxHp = 100;
-            Hp = MaxHp;
-            Exp = 100;
-            minMoney = 200;
-            maxMoney = 501;
-            Money = GetRNG(minMoney, maxMoney);
             IsAgressive = true;
-            WinIfKIlled = true;
-
+            //WinIfKIlled = true;
         }
 
         public override int Attack()

@@ -10,6 +10,11 @@ namespace TextDungeon
     {
         protected Printer pr = new Printer();
 
+        protected NPC(string name) : base(name, 10)
+        {
+
+        }
+
         internal abstract bool Interact(); // alla npc:er ska kunna tala
 
         public override int Attack()
@@ -26,9 +31,8 @@ namespace TextDungeon
         public Quest Quest { get; protected set; } //den quest som questgivern har
         public bool QuestGiven { get; protected set; } // har questgivern redan get sitt quest till spelaren
 
-        public QuestGiver(Quest quest) // konstruktorn för questgivern
+        public QuestGiver(Quest quest) : base ("Quest Giver")// konstruktorn för questgivern
         {
-            Name = "Quest Giver";
             Quest = quest;
         }
 
@@ -92,10 +96,9 @@ namespace TextDungeon
     {
         private Item[] itemList = { new Potion(), new Dagger(), new Shirt() };
 
-        public Shopkeep()
+        public Shopkeep() : base ("Shopkeep")
         {
-            Name = "Shopkeep";
-
+            
         }
 
         internal override bool Interact()

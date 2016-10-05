@@ -36,8 +36,6 @@ namespace TextDungeon
             }
         }
 
-
-
         private Enemy enemy; //fiende som finns i rummet
         public Enemy Enemy
         {
@@ -131,6 +129,8 @@ namespace TextDungeon
             }
         }
 
+        public string TypeOfRoom { get; private set; }
+
         /*public Room(NPC npc, Item item, Enemy enemy, bool respawn, int positionInMap, string roomDescription, string newDescriptionIfEnemyIsRemovedFromRoom,
             string newDescriptionIfItemIsRemovedFromRoom) //konstruktor för Room (ska den inte ha t ex en fiende så skriv null)
         {
@@ -143,6 +143,13 @@ namespace TextDungeon
             Respawn = respawn;
             NPC = npc;
         }*/
+
+        protected Room(int positionInMap, string roomDescription, string typeOfRoom)
+        {
+            this.RoomDescription = roomDescription;
+            this.positionInMap = positionInMap;
+            TypeOfRoom = typeOfRoom;
+        }
 
         public Room(NPC npc, Item item, Enemy enemy, bool respawn, int positionInMap, params string[] roomDescriptions) //konstruktor för Room (ska den inte ha t ex en fiende så skriv null)
         {
@@ -217,4 +224,21 @@ namespace TextDungeon
             RoomDescription = ListOfRoomDescriptions[0];
         }
     }
+
+    class StairRoom : Room
+    {
+        public bool StairsGoUp { get; private set; }
+        public StairRoom(int positionInMap, string roomDescription, bool stairsGoUp) : base(positionInMap, roomDescription, "Stairroom")
+        {
+            StairsGoUp = stairsGoUp;
+        }
+
+        public void UseStairs()
+        {
+            int floorNumber = Program.roomGenerator.FloorNumber;
+            if(StairsGoUp) Program.roomGenerator = new RoomGenerator(floorNumber+1);
+            else Program.roomGenerator = new RoomGenerator(floorNumber-1);
+        }
+    }
+
 }

@@ -82,6 +82,8 @@ namespace TextDungeon
 
         internal Weapon EquiptedWeapon { get; private set; }
 
+        private Armor equiptedArmor = new Shirt();
+
         internal Armor EquiptedArmor { get; private set; }
 
         public new int ArmorRating
@@ -91,7 +93,7 @@ namespace TextDungeon
                 if (EquiptedArmor != null)
                 {
                     ArmorRating = EquiptedArmor.ArmorRating;
-                    return ArmorRating;
+                    return armorRating;
                 }
 
                 else
@@ -109,11 +111,8 @@ namespace TextDungeon
 
         }
 
-        public PlayerCharacter(string name) //konstruktorn som skapar en ny spelare
+        public PlayerCharacter(string name) : base(name, 30) //konstruktorn som skapar en ny spelare
         {
-            Name = name;
-            MaxHp = 30;
-            Hp = MaxHp;
             AddToInventory(new Potion());
 
         }

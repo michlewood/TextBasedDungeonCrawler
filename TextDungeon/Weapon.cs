@@ -8,6 +8,12 @@ namespace TextDungeon
 {
     abstract class Weapon : Equipment
     {
+        protected Weapon(string name, int price, int damageDone) : base(name, price)
+        {
+            DamageDone = damageDone;
+            IsWeapon = true;            
+        }
+
         public int DamageDone { get; protected set; }
         
         public override string StorDescription()
@@ -19,13 +25,9 @@ namespace TextDungeon
 
     internal class Dagger : Weapon
     {
-        internal Dagger()
+        internal Dagger() : base("Dagger", 15, 20)
         {
-            Name = "Dagger";
-            Price = 15;
-            DamageDone = 20;
-            Equiptable = true;
-            IsWeapon = true;
+
         }
     }
 }

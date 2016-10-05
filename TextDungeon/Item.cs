@@ -15,6 +15,12 @@ namespace TextDungeon
 
         public bool IsArmor { get; protected set; }
 
+        protected Item(string name, int price)
+        {
+            Name = name;
+            Price = price;
+        }
+
         abstract public string StorDescription();
 
     }
@@ -24,10 +30,8 @@ namespace TextDungeon
         private readonly int heal = 25; // den mängd som potions ska hela
         public int Heal { get { return heal; } }
 
-        internal Potion() // potions konstruktor
+        internal Potion() : base ("Potion", 10) // potions konstruktor
         {
-            Name = "Potion";
-            Price = 10;
 
         }
 
@@ -39,9 +43,9 @@ namespace TextDungeon
 
     internal class Key : Item //item: key - låser upp dörrar
     {
-        internal Key() // konstruktor för key 
+        internal Key() : base ("Key", 50) // konstruktor för key 
         {
-            Name = "Key";
+
         }
 
         public override string StorDescription()

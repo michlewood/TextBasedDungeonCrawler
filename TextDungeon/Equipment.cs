@@ -9,6 +9,12 @@ namespace TextDungeon
     abstract class Equipment : Item
     {
 
+        protected Equipment(string name, int price) : base (name, price)
+        {
+            Equiptable = true;            
+        }
+
+
     }
 
 }

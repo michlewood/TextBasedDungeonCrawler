@@ -31,6 +31,12 @@ namespace TextDungeon
             protected set { armorRating = value; }
         }
 
+        protected Creature(string name, int maxHp)
+        {
+            Name = name;
+            Hp = MaxHp = maxHp;
+        }
+
         public abstract int Attack();
 
         public int TakeDamage(int amountOfDamage)

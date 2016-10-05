@@ -20,9 +20,8 @@ namespace TextDungeon
         bool newLocation = true;
         Printer pr = new Printer();
         Room currentRoom; //sparar det rum spelaren är i
-        RoomGenerator roomGenerator = new RoomGenerator(currentFloor); //skapar en RoomGenerator som håller en lista av alla rum som finns
+        public static RoomGenerator roomGenerator = new RoomGenerator(currentFloor); //skapar en RoomGenerator som håller en lista av alla rum som finns
         PlayerCharacter playerCharacter = new PlayerCharacter("Michael"); //Karaktären som spelaren spelar som
-
 
         Program() //Konstruktorn startar programmet
         {
@@ -175,7 +174,7 @@ namespace TextDungeon
             pr.PrintLine("");
         }
 
-        private void StatBar() //skriver status bar med ifo om spelaren
+        private void StatBar() //skriver status bar med info om spelaren
         {
             Console.ForegroundColor = ConsoleColor.White;
             pr.Print(".:| {5}s hp: {0} | Armor: {4} | Stamina: {1} | gp: {2} | Exp to level: {3} | Exits: ", playerCharacter.Hp, playerCharacter.Stamina, PlayerCharacter.AmountOfMoney, (playerCharacter.ExpRequieredToLevelUp - playerCharacter.Exp), playerCharacter.ArmorRating, playerCharacter.Name);
@@ -217,6 +216,18 @@ namespace TextDungeon
                 Console.ReadLine();
                 return;
 
+            }
+
+            if (action.Equals("use stairs") || action.Equals("us"))
+            {
+                if(currentRoom.TypeOfRoom == "Stairroom")
+                {
+                    StairRoom tempRoom = (StairRoom)currentRoom;
+                    tempRoom.UseStairs();
+
+                    currentRoom = roomGenerator.RoomList.Find(x => x.PositionInMap == currentRoom.PositionInMap);
+                    return;
+                }
             }
 
             if (CharacterScreen(action)) return;
@@ -453,13 +464,12 @@ namespace TextDungeon
 
         private void HelpScreen()
         {
-
             Console.Clear();
             Console.WriteLine("Commands in game:\n\"n\" to go north \n\"s\" to go south \n\"e\" to go east \n\"w\" to go west\n\n" +
                 "\"l\" to look around the current room \n\"t\" to take an item in the current room\n\n" +
                 "\"help\" to get the helpscreen \n\"history\" to see everything that has happend \n\"rh\" to see what has happend in this room\n" +
                 "\"q\" to see current quest \n\n\"talk\" to talk to Npcs\n" +
-                "\"i\" to open the inventory screen, \n\"p\" to use potion\n\n\"a\" to attack \n\"sa\" to do a strong attack");
+                "\"i\" to open the inventory screen, \n\"p\" to use potion\n\"Equipt name\" to equipt something with that name\n\n\"a\" to attack \n\"sa\" to do a strong attack");
             Console.ReadLine();
         }
 
