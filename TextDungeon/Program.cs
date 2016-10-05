@@ -154,7 +154,7 @@ namespace TextDungeon
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
 
-            Console.Write(" | ");
+            pr.Print(" | ");
 
             if (!(currentRoom.NPC == null))
             {
@@ -468,7 +468,7 @@ namespace TextDungeon
         {
             Console.Clear();
             Console.WriteLine("Commands in game:\n\"n\" to go north \n\"s\" to go south \n\"e\" to go east \n\"w\" to go west\n\n" +
-                "\"l\" to look around the current room \n\"t\" to take an item in the current room\n\"us\" go up or down stairs\n\n" +
+                "\"l\" to look around the current room \n\"t\" to take an item in the current room\n\"us\" to go up or down stairs\n\n" +
                 "\"help\" to get the helpscreen \n\"history\" to see everything that has happend \n\"rh\" to see what has happend in this room\n" +
                 "\"q\" to see current quest \n\n\"talk\" to talk to Npcs\n" +
                 "\"i\" to open the inventory screen, \n\"p\" to use potion\n\"Equipt name\" to equipt something with that name\n\n\"a\" to attack \n\"sa\" to do a strong attack");
