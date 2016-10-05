@@ -78,6 +78,70 @@ namespace TextDungeon
 
         }
 
+        private int minDamage;
+        public int MinDamage
+        {
+            get
+            {
+                int weaponDamage = 0;
+                if (EquiptedWeapon != null)
+                {
+                    weaponDamage = EquiptedWeapon.DamageDone;
+                }
+                minDamage = 0 + level + weaponDamage;
+                return minDamage;
+            }
+            private set { minDamage = value; }
+        }
+
+        private int maxDamage;
+        public int MaxDamage
+        {
+            get
+            {
+                int weaponDamage = 0;
+                if (EquiptedWeapon != null)
+                {
+                    weaponDamage = EquiptedWeapon.DamageDone;
+                }
+                maxDamage = 3 + level + weaponDamage;
+                return maxDamage;
+            }
+            private set { maxDamage = value; }
+        }
+
+        #region stats
+        private int happiness = 1;
+        public int Happiness
+        {
+            get
+            {
+                return happiness;
+            }
+
+            private set
+            {
+                happiness = value;
+            }
+        }
+
+        private int determination = 1;
+        public int Determination
+        {
+            get
+            {
+                return determination;
+            }
+
+            private set
+            {
+                determination = value;
+            }
+        }
+        #endregion
+
+        Random rng = new Random();
+
         public Quest CurrentQuest { get; set; } //det quest som spelaren har just nu
 
         internal Weapon EquiptedWeapon { get; private set; }
@@ -125,28 +189,17 @@ namespace TextDungeon
 
         public override int Attack() //metod som returnerar hur mycket skada spelaren ska göra med en simpel attack
         {
-            int weaponDamage = 0;
-            if (EquiptedWeapon != null)
-            {
-                weaponDamage = EquiptedWeapon.DamageDone;
-            }
-            return GetRNG(0 + level + weaponDamage, 3 + level + weaponDamage);
+
+            return GetRNG(MinDamage, MaxDamage);
 
         }
 
         public int StrongAttack() //metod som returnerar hur mycket skada spelaren ska göra med en stark attack (använder stamina)
         {
-
-            int weaponDamage = 0;
-            if (EquiptedWeapon != null)
-            {
-                weaponDamage = EquiptedWeapon.DamageDone;
-            }
-
             if (stamina >= 3)
             {
                 stamina -= 3;
-                return GetRNG(1 + level + weaponDamage, 5 + level + weaponDamage);
+                return GetRNG(MinDamage+1,MaxDamage+5);
 
             }
             else
@@ -185,6 +238,14 @@ namespace TextDungeon
             EquiptedWeapon = weaponToEquipt;
         }
 
+        internal void EquiptArmor(Armor armorToEquipt)
+        {
+            if (EquiptedArmor != null) AddToInventory(EquiptedArmor);
+            Inventory.RemoveItem(armorToEquipt);
+            EquiptedArmor = armorToEquipt;
+            ArmorRating = armorToEquipt.ArmorRating;
+        }
+
         internal static void AddToMoney(int amountToAdd) //metod för att ge spelaren pengar (t ex om hen besegrar en fiende) 
         {
             amountOfMoney += amountToAdd;
@@ -206,12 +267,23 @@ namespace TextDungeon
                     Exp -= ExpRequieredToLevelUp;
                     Level++;
 
+                    Console.WriteLine("You leveled up! \nyou are level {0}!", level);
+
                     MaxHp += 5;
-                    TakeDamage(5);
+                    HealDamage(5);
                     MaxStamina += 2;
                     Stamina = MaxStamina;
+                    Console.WriteLine("Hp increased by 5");
+                    Console.WriteLine("Stamina increased by 2");
+                    int statIncrease = rng.Next(1, 3);
+                    Console.WriteLine("Happiness increased by {0}", statIncrease);
+                    Happiness += statIncrease;
+                    statIncrease = rng.Next(1, 3);
+                    Console.WriteLine("Determination increased by {0}", statIncrease);
+                    Determination += statIncrease;
 
-                    Console.WriteLine("You leveled up! \nyou are level {0}!", level);
+
+
 
                 }
                 else return;
@@ -224,12 +296,6 @@ namespace TextDungeon
             Stamina += MaxStamina / 5;
         }
 
-        internal void EquiptArmor(Armor armorToEquipt)
-        {
-            if (EquiptedArmor != null) AddToInventory(EquiptedArmor);
-            Inventory.RemoveItem(armorToEquipt);
-            EquiptedArmor = armorToEquipt;
-            ArmorRating = armorToEquipt.ArmorRating;
-        }
+        
     }
 }

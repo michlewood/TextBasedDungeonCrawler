@@ -177,7 +177,7 @@ namespace TextDungeon
         private void StatBar() //skriver status bar med info om spelaren
         {
             Console.ForegroundColor = ConsoleColor.White;
-            pr.Print(".:| {5}s hp: {0} | Armor: {4} | Stamina: {1} | gp: {2} | Exp to level: {3} | Exits: ", playerCharacter.Hp, playerCharacter.Stamina, PlayerCharacter.AmountOfMoney, (playerCharacter.ExpRequieredToLevelUp - playerCharacter.Exp), playerCharacter.ArmorRating, playerCharacter.Name);
+            pr.Print(".:| {5}s hp: {0} | Armor: {4} | Stamina: {1} | Damage {6}-{7} | gp: {2} | Exp to level: {3} | Exits: ", playerCharacter.Hp, playerCharacter.Stamina, PlayerCharacter.AmountOfMoney, (playerCharacter.ExpRequieredToLevelUp - playerCharacter.Exp), playerCharacter.ArmorRating, playerCharacter.Name, playerCharacter.MinDamage, playerCharacter.MaxDamage);
 
             Console.ForegroundColor = ConsoleColor.Green;
             pr.Print(currentRoom.GetExitsAsString());
@@ -328,13 +328,18 @@ namespace TextDungeon
         {
             if (action.Equals("Character") || action.Equals("c") || action.Equals("inventory") || action.Equals("i"))
             {
+                
+
                 string command;
                 do
                 {
                     Console.Clear();
 
+                    Console.WriteLine(playerCharacter.Name);
+                    CharacterStatScreen();
                     EquipmentScreen();
-                    Console.WriteLine();
+                    CharacterInfoScreen();
+
                     List<Item> uniqueItems = InventoryScreen();
 
 
@@ -355,17 +360,57 @@ namespace TextDungeon
             return false;
         }
 
+        private void CharacterInfoScreen()
+        {
+            int row = 1;
+            int column = 0;
+            
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Hp : {0}/{1}", playerCharacter.Hp, playerCharacter.MaxHp);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Stamina : {0}/{1}", playerCharacter.Stamina, playerCharacter.MaxStamina);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Armor Rating : {0}", playerCharacter.ArmorRating);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Damage : {0}-{1}", playerCharacter.MinDamage, playerCharacter.MaxDamage);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Gp : {0}", PlayerCharacter.AmountOfMoney);
+
+            Console.SetCursorPosition(0, row+1);
+        }
+
+        private void CharacterStatScreen()
+        {
+            int row = 1;
+            int column = 20;
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Level : {0}", playerCharacter.Level);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Exp : {0}/{1}", playerCharacter.Exp, playerCharacter.ExpRequieredToLevelUp);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Stats:");
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Happiness: {0}", playerCharacter.Happiness);
+            Console.SetCursorPosition(column, row++);
+            Console.WriteLine("Determination: {0}", playerCharacter.Determination);
+        }
+
         private void EquipmentScreen()
         {
+            int row = 1;
+            int column = 40;
+            Console.SetCursorPosition(column, row++);
             Console.WriteLine("Equipment:");
+            Console.SetCursorPosition(column, row++);
             if (playerCharacter.EquiptedArmor != null) Console.WriteLine("Armor: {0}", playerCharacter.EquiptedArmor.Name);
             else Console.WriteLine("Armor: None");
+            Console.SetCursorPosition(column, row++);
             if (playerCharacter.EquiptedWeapon != null) Console.WriteLine("Weapon: {0}", playerCharacter.EquiptedWeapon.Name);
             else Console.WriteLine("Weapon: None");
 
         }
 
-        private List<Item> InventoryScreen() //tar bort huvud skärmen och visar inventory skärmen istället
+        private List<Item> InventoryScreen() 
         {
 
             List<Item> uniqueItems = new List<Item>();
@@ -471,7 +516,7 @@ namespace TextDungeon
                 "\"l\" to look around the current room \n\"t\" to take an item in the current room\n\"us\" to go up or down stairs\n\n" +
                 "\"help\" to get the helpscreen \n\"history\" to see everything that has happend \n\"rh\" to see what has happend in this room\n" +
                 "\"q\" to see current quest \n\n\"talk\" to talk to Npcs\n" +
-                "\"i\" to open the inventory screen, \n\"p\" to use potion\n\"Equipt name\" to equipt something with that name\n\n\"a\" to attack \n\"sa\" to do a strong attack");
+                "\"c\" to open the character screen, \n\"p\" to use potion\n\"Equipt name\" to equipt something with that name\n\n\"a\" to attack \n\"sa\" to do a strong attack");
             Console.ReadLine();
         }
 
