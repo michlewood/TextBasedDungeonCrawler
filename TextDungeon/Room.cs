@@ -15,6 +15,7 @@ namespace TextDungeon
 
         public Enemy Enemy { get; private set; } //fiende som finns i rummet
         public Enemy DeadEnemy { get; private set; } //om det fanns en fiende förut som nu är död
+        internal bool Respawn { get; private set; } // om fienden i rummet ska kunna respawna
 
         public Item Item { get; private set; } // om det är någon item i rummet
 
@@ -31,8 +32,6 @@ namespace TextDungeon
                 return exits;
             }
         }
-
-        internal bool Respawn { get; private set; } // om fienden i rummet ska kunna respawna
 
         internal NPC NPC { get; private set; } //om det finn en npc i rummet
 
@@ -161,5 +160,4 @@ namespace TextDungeon
             else Program.roomGenerator = new RoomGenerator(floorNumber-1);
         }
     }
-
 }

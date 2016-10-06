@@ -53,7 +53,7 @@ namespace TextDungeon
                     Console.ReadLine();
                 }
 
-                win = currentRoom.IsWinOnEntry;
+                if(!win) win = currentRoom.IsWinOnEntry;
             }
             if (win)
             {
@@ -860,7 +860,7 @@ namespace TextDungeon
                 playerCharacter.AddExp(currentRoom.Enemy.Exp);
 
                 CheckQuest();
-                win = currentRoom.Enemy.WinIfKIlled;
+                win = currentRoom.Enemy.WinIfKilled;
                 currentRoom.RemoveEnemy();
                 currentRoom.UpdateRoomIfEnemyIsRemovedFromRoom();
 

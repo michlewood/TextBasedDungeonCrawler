@@ -49,7 +49,7 @@ namespace TextDungeon
 
         private void SecondFloorRooms()
         {
-            RoomList.Add(new Room(null, null, null, false, 7, true, "new room", null, null));
+            RoomList.Add(new Room(null, null, new Rat(true), false, 7, false, "new room", null, null));
             RoomList.Add(new StairRoom(8, false, "You see stairs going down", false));
         }
 
@@ -63,9 +63,9 @@ namespace TextDungeon
             RoomList.Add(new Room(null, null, new Rat(), true, 0, false, "A giant (relatively speaking) rat  is standning infront of you.", "The rat is dead but, judging by the sounds coming from the wall, there will be more.", null));
             RoomList.Add(new Room(null, null, null, false, 1, false, "You are in a small unadorned room with only torchlight to see by.", null, null));
             RoomList.Add(new Room(null, new Key(), new Dog(), false, 2, false, "A wild dog stands in the middle of the room.", "The corpse of the dog lies in a pool of it own blood. you see a glimmer in the corner of the room.", "The corpse of the dog lies in a pool of it own blood."));
-            RoomList.Add(new Room(new Shopkeep(), null, null, false, 3, false, "You are in what is unmistakably a shop you see a woman sitting behind the counter.", null, null));
+            RoomList.Add(new Room(new Shopkeep(), null, null, false, 3, false, "You are in what is unmistakably a shop. You see a woman sitting behind the counter.", null, null));
             RoomList.Add(new Room(quester, new Potion(), null, false, 4, false, "You see a man standing in the middle of the room. \nthere is a potion on a table by the wall.", null, "You see a man standing in the middle of the room."));
-            RoomList.Add(new Room(null, null, new Ghidorah(), false, 7, false, "You see a giant, golden-scaled, three-headed dragon infront of you, you realise that you know it from legends. Ghidorah!", "You have slaint the legendary beast! \nYet greater mysteries remain: How did it fit in this room? And how did it get in here? \nYou wil probably never find the answers to these questions", null));
+            RoomList.Add(new Room(null, null, new Ghidorah(false), false, 7, false, "You see a giant, golden-scaled, three-headed dragon infront of you, you realise that you know it from legends. Ghidorah!", "You have slaint the legendary beast! \nYet greater mysteries remain: How did it fit in this room? And how did it get in here? \nYou will probably never find the answers to these questions", null));
             RoomList.Add(new StairRoom(8, false, "You see stairs going up", true));
 
         }

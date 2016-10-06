@@ -11,16 +11,17 @@ namespace TextDungeon
 
         public string AttackName { get; protected set; }
 
-        public bool WinIfKIlled { get; protected set; }
+        public bool WinIfKilled { get; protected set; }
 
         public bool IsAgressive { get; protected set; }
 
-        public Enemy(string name, int maxHp, string attackName, int exp, int minMoney, int maxMoney) : base (name, maxHp) //konstruktor för råtta
+        public Enemy(string name, int maxHp, string attackName, int exp, int minMoney, int maxMoney, bool winIfKilled) : base (name, maxHp) //konstruktor för råtta
         {
             AttackName = attackName;
             Hp = MaxHp;
             Exp = exp;
             Money = GetRNG(minMoney, maxMoney);
+            WinIfKilled = winIfKilled;
         }
 
         internal void Reset() //återställer en fiendes värden om den ska återupplivas 
@@ -32,10 +33,15 @@ namespace TextDungeon
 
     public class Rat : Enemy //fiende: råtta 
     {
-        public Rat() : base("Rat", 2, "Nibble", 1, 1, 3) //konstruktor för råtta
+        public Rat(bool winIfKilled) : base("Rat", 2, "Nibble", 1, 1, 3, winIfKilled) //konstruktor för råtta
         {
 
-        } 
+        }
+
+        public Rat() : base("Rat", 2, "Nibble", 1, 1, 3, false) //konstruktor för råtta
+        {
+
+        }
 
 
         public override int Attack() // råttans attack 
@@ -47,7 +53,7 @@ namespace TextDungeon
 
     public class Dog : Enemy // fiende: hund
     {
-        public Dog() : base ("Dog", 5, "Bite", 3, 3, 6) //konstruktor för hund 
+        public Dog() : base ("Dog", 5, "Bite", 3, 3, 6, false) //konstruktor för hund 
         {
 
         }
@@ -60,10 +66,9 @@ namespace TextDungeon
 
     public class Ghidorah : Enemy
     {
-        public Ghidorah() : base("Ghidorah", 100, "Triple bite", 50, 50, 151) //konstruktor för Ghidorah 
+        public Ghidorah(bool winIfKilled) : base("Ghidorah", 100, "Triple bite", 50, 50, 151, winIfKilled) //konstruktor för Ghidorah 
         {
             IsAgressive = true;
-            //WinIfKIlled = true;
         }
 
         public override int Attack()
