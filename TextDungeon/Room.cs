@@ -129,6 +129,8 @@ namespace TextDungeon
             }
         }
 
+        public bool IsWinOnEntry { get; set; }
+
         public string TypeOfRoom { get; private set; }
 
         /*public Room(NPC npc, Item item, Enemy enemy, bool respawn, int positionInMap, string roomDescription, string newDescriptionIfEnemyIsRemovedFromRoom,
@@ -144,14 +146,15 @@ namespace TextDungeon
             NPC = npc;
         }*/
 
-        protected Room(int positionInMap, string roomDescription, string typeOfRoom)
+        protected Room(int positionInMap, bool isWinOnEntry, string roomDescription, string typeOfRoom)
         {
             this.RoomDescription = roomDescription;
             this.positionInMap = positionInMap;
             TypeOfRoom = typeOfRoom;
+            IsWinOnEntry = isWinOnEntry;
         }
 
-        public Room(NPC npc, Item item, Enemy enemy, bool respawn, int positionInMap, params string[] roomDescriptions) //konstruktor för Room (ska den inte ha t ex en fiende så skriv null)
+        public Room(NPC npc, Item item, Enemy enemy, bool respawn, int positionInMap, bool isWinOnEntry, params string[] roomDescriptions) //konstruktor för Room (ska den inte ha t ex en fiende så skriv null)
         {
             ListOfRoomDescriptions = roomDescriptions;
             RoomDescription = ListOfRoomDescriptions[0];
@@ -161,6 +164,7 @@ namespace TextDungeon
             Item = item;
             Respawn = respawn;
             NPC = npc;
+            IsWinOnEntry = isWinOnEntry;
         }
 
         internal string GetExitsAsString() //en sträng av alla utgångar 
@@ -228,7 +232,7 @@ namespace TextDungeon
     class StairRoom : Room
     {
         public bool StairsGoUp { get; private set; }
-        public StairRoom(int positionInMap, string roomDescription, bool stairsGoUp) : base(positionInMap, roomDescription, "Stairroom")
+        public StairRoom(int positionInMap, bool isWinOnEntry, string roomDescription, bool stairsGoUp) : base(positionInMap, isWinOnEntry, roomDescription, "Stairroom")
         {
             StairsGoUp = stairsGoUp;
         }

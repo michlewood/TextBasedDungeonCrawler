@@ -38,8 +38,6 @@ namespace TextDungeon
 
             while (alive && !win)
             {
-
-
                 GameGUI();
                 pr.PrintLine("What would you like to do?");
                 string action = pr.Reader().ToLower();
@@ -54,6 +52,8 @@ namespace TextDungeon
 
                     Console.ReadLine();
                 }
+
+                win = currentRoom.IsWinOnEntry;
             }
             if (win)
             {

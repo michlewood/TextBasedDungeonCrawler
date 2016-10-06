@@ -60,7 +60,7 @@ namespace TextDungeon
 
     public class Ghidorah : Enemy
     {
-        public Ghidorah() : base("Ghidorah", 100, "Triple bite", 100, 200, 501) //konstruktor för Ghidorah 
+        public Ghidorah() : base("Ghidorah", 100, "Triple bite", 50, 50, 151) //konstruktor för Ghidorah 
         {
             IsAgressive = true;
             //WinIfKIlled = true;
