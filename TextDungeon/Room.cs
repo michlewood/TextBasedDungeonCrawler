@@ -8,75 +8,15 @@ namespace TextDungeon
 {
     class Room
     {
-        private string[] listOfRoomDescriptions; //en sträng som inehåller en beskrivning på rummet
-        public string[] ListOfRoomDescriptions
-        {
-            get
-            {
-                return listOfRoomDescriptions;
-            }
+        #region Class variables and properties
+        public string[] ListOfRoomDescriptions { get; set; } //en sträng som inehåller en beskrivning på rummet
 
-            set
-            {
-                listOfRoomDescriptions = value;
-            }
-        }
+        public string RoomDescription { get; private set; } //en sträng som inehåller en beskrivning på rummet
 
-        private string roomDescription; //en sträng som inehåller en beskrivning på rummet
-        public string RoomDescription
-        {
-            get
-            {
-                return roomDescription;
-            }
+        public Enemy Enemy { get; private set; } //fiende som finns i rummet
+        public Enemy DeadEnemy { get; private set; } //om det fanns en fiende förut som nu är död
 
-            private set
-            {
-                roomDescription = value;
-            }
-        }
-
-        private Enemy enemy; //fiende som finns i rummet
-        public Enemy Enemy
-        {
-            get
-            {
-                return enemy;
-            }
-
-            private set
-            {
-                enemy = value;
-            }
-        }
-
-        private Enemy deadEnemy; //om det fanns en fiende förut som nu är död
-        public Enemy DeadEnemy
-        {
-            get
-            {
-                return deadEnemy;
-            }
-
-            private set
-            {
-                deadEnemy = value;
-            }
-        }
-
-        private Item item; // om det är någon item i rummet
-        public Item Item
-        {
-            get
-            {
-                return item;
-            }
-
-            private set
-            {
-                item = value;
-            }
-        }
+        public Item Item { get; private set; } // om det är någon item i rummet
 
         private Connection[] exits = new Connection[4]; // en lista på potentiella utgångra från rummet
         public Connection[] Exits
@@ -92,33 +32,9 @@ namespace TextDungeon
             }
         }
 
-        private bool respawn; // om fienden i rummet ska kunna respawna
-        internal bool Respawn
-        {
-            get
-            {
-                return respawn;
-            }
+        internal bool Respawn { get; private set; } // om fienden i rummet ska kunna respawna
 
-            private set
-            {
-                respawn = value;
-            }
-        }
-
-        private NPC npc; //om det finn en npc i rummet
-        internal NPC NPC
-        {
-            get
-            {
-                return npc;
-            }
-
-            set
-            {
-                npc = value;
-            }
-        }
+        internal NPC NPC { get; private set; } //om det finn en npc i rummet
 
         private readonly int positionInMap;
         public int PositionInMap
@@ -129,9 +45,10 @@ namespace TextDungeon
             }
         }
 
-        public bool IsWinOnEntry { get; set; }
+        public bool IsWinOnEntry { get; private set; }
 
         public string TypeOfRoom { get; private set; }
+        #endregion
 
         /*public Room(NPC npc, Item item, Enemy enemy, bool respawn, int positionInMap, string roomDescription, string newDescriptionIfEnemyIsRemovedFromRoom,
             string newDescriptionIfItemIsRemovedFromRoom) //konstruktor för Room (ska den inte ha t ex en fiende så skriv null)
@@ -186,12 +103,12 @@ namespace TextDungeon
 
         internal void RemoveItem() //tar bort ett item från rummet
         {
-            if (!(item == null))
+            if (!(Item == null))
             {
                 if (!(ListOfRoomDescriptions[2] == null))
                 {
                     RoomDescription = ListOfRoomDescriptions[2];
-                    item = null;
+                    Item = null;
                 }
 
             }
