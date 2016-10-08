@@ -11,7 +11,7 @@ namespace TextDungeon
     {
 
         private static string history;
-        public string History
+        public static string History
         {
             get
             {
@@ -24,7 +24,7 @@ namespace TextDungeon
         }
 
         private static string roomHistory;
-        public string RoomHistory
+        public static string RoomHistory
         {
             get
             {
@@ -36,7 +36,7 @@ namespace TextDungeon
             }
         }
 
-        internal void PrintLine(string input, params object[] arg) //(Används oftast istället för Console.WriteLine) skriver ut det stringen som är i stringen och sparar det till historia så att det kan skrivas igen 
+        public static void PrintLine(string input, params object[] arg) //(Används oftast istället för Console.WriteLine) skriver ut det stringen som är i stringen och sparar det till historia så att det kan skrivas igen 
         {
             string remadeInput = AddArgToString(input, arg);
 
@@ -44,7 +44,7 @@ namespace TextDungeon
             Console.WriteLine(remadeInput);
         }
 
-        internal void Print(string input, params object[] arg) //(Används oftast istället för Console.WriteLine) skriver ut det stringen som är i stringen och sparar det till historia så att det kan skrivas igen 
+        public static void Print(string input, params object[] arg) //(Används oftast istället för Console.WriteLine) skriver ut det stringen som är i stringen och sparar det till historia så att det kan skrivas igen 
         {
             string remadeInput = AddArgToString(input, arg);
 
@@ -52,7 +52,7 @@ namespace TextDungeon
             Console.Write(remadeInput);
         }
 
-        private string AddArgToString(string input, params object[] arg)
+        private static string AddArgToString(string input, params object[] arg)
         {
             int numberBetweenBrackets;
             string remadeInput = "";
@@ -72,7 +72,7 @@ namespace TextDungeon
             return remadeInput;
         }
 
-        internal string Reader() // (Används oftast iställer för Console.ReadLine) tar emot input från spelaren och returnerar det som ett string och sparar det till historia 
+        public static string Reader() // (Används oftast iställer för Console.ReadLine) tar emot input från spelaren och returnerar det som ett string och sparar det till historia 
         {
             string input = Console.ReadLine();
 
@@ -82,7 +82,7 @@ namespace TextDungeon
 
         }
 
-        internal void ClearRoomHistory()
+        public static void ClearRoomHistory()
         {
             RoomHistory = "";
         }

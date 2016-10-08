@@ -8,7 +8,6 @@ namespace TextDungeon
 {
     abstract class NPC : Creature //abstrakt klass NPC som alla npc:er ärver ifrån. Ärver själv från Creature
     {
-        protected Printer pr = new Printer();
 
         protected NPC(string name) : base(name, 10)
         {
@@ -42,7 +41,7 @@ namespace TextDungeon
             if (Quest.CheckCompleted())
             {
 
-                pr.PrintLine("{0}: Thank you very much!", Name);
+                Printer.PrintLine("{0}: Thank you very much!", Name);
                 Quest.ResetQuest();
                 QuestGiven = false;
 
@@ -51,7 +50,7 @@ namespace TextDungeon
             else if (QuestGiven)
             {
 
-                pr.PrintLine("{0}: Please kill the rats!", Name);
+                Printer.PrintLine("{0}: Please kill the rats!", Name);
 
 
             }
@@ -61,18 +60,18 @@ namespace TextDungeon
                 do
                 {
 
-                    pr.PrintLine("{0}: Will you kill some rats for me? (y/n)", Name);
-                    answer = pr.Reader().ToLower();
+                    Printer.PrintLine("{0}: Will you kill some rats for me? (y/n)", Name);
+                    answer = Printer.Reader().ToLower();
                     if (answer == "y" || answer == "yes")
                     {
-                        pr.PrintLine("{0}: Thank You!", Name);
+                        Printer.PrintLine("{0}: Thank You!", Name);
                         GiveQuest();
 
                         return true;
                     }
                     else if (answer == "n" || answer == "no")
                     {
-                        pr.PrintLine("{0}: Oh well", Name);
+                        Printer.PrintLine("{0}: Oh well", Name);
                         return false;
                     }
 

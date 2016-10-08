@@ -18,7 +18,6 @@ namespace TextDungeon
 
         static bool win = false;
         bool newLocation = true;
-        Printer pr = new Printer();
         Room currentRoom; //sparar det rum spelaren är i
         public static RoomGenerator roomGenerator = new RoomGenerator(currentFloor); //skapar en RoomGenerator som håller en lista av alla rum som finns
         PlayerCharacter playerCharacter = new PlayerCharacter("Michael"); //Karaktären som spelaren spelar som
@@ -39,15 +38,15 @@ namespace TextDungeon
             while (alive && !win)
             {
                 GameGUI();
-                pr.PrintLine("What would you like to do?");
-                string action = pr.Reader().ToLower();
+                Printer.PrintLine("What would you like to do?");
+                string action = Printer.Reader().ToLower();
 
                 checkAction(action);
                 if (playerCharacter.Hp < 1)
                 {
                     alive = false;
                     Console.ForegroundColor = ConsoleColor.Red;
-                    pr.PrintLine("You Died");
+                    Printer.PrintLine("You Died");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                     Console.ReadLine();
@@ -140,50 +139,50 @@ namespace TextDungeon
         {
             if (!(currentRoom.Enemy == null))
             {
-                pr.Print("Enemy: ");
+                Printer.Print("Enemy: ");
                 Console.ForegroundColor = ConsoleColor.Red;
-                pr.Print(currentRoom.Enemy.Name);
+                Printer.Print(currentRoom.Enemy.Name);
                 Console.ForegroundColor = ConsoleColor.Gray;
-                pr.Print(" | hp: " + currentRoom.Enemy.Hp);
+                Printer.Print(" | hp: " + currentRoom.Enemy.Hp);
             }
             else
             {
-                pr.Print("Enemy: ");
+                Printer.Print("Enemy: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                pr.Print("None");
+                Printer.Print("None");
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
 
-            pr.Print(" | ");
+            Printer.Print(" | ");
 
             if (!(currentRoom.NPC == null))
             {
-                pr.Print("NPC: ");
+                Printer.Print("NPC: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                pr.Print(currentRoom.NPC.Name);
+                Printer.Print(currentRoom.NPC.Name);
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
             else
             {
-                pr.Print("NPC: ");
+                Printer.Print("NPC: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                pr.Print("None");
+                Printer.Print("None");
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
 
-            pr.PrintLine("");
+            Printer.PrintLine("");
         }
 
         private void StatBar() //skriver status bar med info om spelaren
         {
             Console.ForegroundColor = ConsoleColor.White;
-            pr.Print(".:| {5}s hp: {0} | Armor: {4} | Stamina: {1} | Damage {6}-{7} | gp: {2} | Exp to level: {3} | Exits: ", playerCharacter.Hp, playerCharacter.Stamina, PlayerCharacter.AmountOfMoney, (playerCharacter.ExpRequieredToLevelUp - playerCharacter.Exp), playerCharacter.ArmorRating, playerCharacter.Name, playerCharacter.MinDamage, playerCharacter.MaxDamage);
+            Printer.Print(".:| {5}s hp: {0} | Armor: {4} | Stamina: {1} | Damage {6}-{7} | gp: {2} | Exp to level: {3} | Exits: ", playerCharacter.Hp, playerCharacter.Stamina, PlayerCharacter.AmountOfMoney, (playerCharacter.ExpRequieredToLevelUp - playerCharacter.Exp), playerCharacter.ArmorRating, playerCharacter.Name, playerCharacter.MinDamage, playerCharacter.MaxDamage);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            pr.Print(currentRoom.GetExitsAsString());
+            Printer.Print(currentRoom.GetExitsAsString());
 
             Console.ForegroundColor = ConsoleColor.White;
-            pr.PrintLine("|:.");
+            Printer.PrintLine("|:.");
 
             Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -194,15 +193,15 @@ namespace TextDungeon
             if (newLocation == true)
             {
                 newLocation = false;
-                pr.ClearRoomHistory();
+                Printer.ClearRoomHistory();
             }
-            pr.PrintLine(currentRoom.RoomDescription);
+            Printer.PrintLine(currentRoom.RoomDescription);
 
         }
 
         private void checkAction(string action) //tar emot ett kommando från spelaren och jämför det med de möjliga tillåtna kommandon 
         {
-            pr.PrintLine("");
+            Printer.PrintLine("");
 
             if (action.Equals("greed is good"))
             {
@@ -241,7 +240,7 @@ namespace TextDungeon
 
             if (action.Equals("history"))
             {
-                Console.WriteLine(pr.History);
+                Console.WriteLine(Printer.History);
                 Console.ReadLine();
                 return;
             }
@@ -249,7 +248,7 @@ namespace TextDungeon
             if (action.Equals("room history") || action.Equals("rh"))
             {
                 Console.Clear();
-                Console.WriteLine(pr.RoomHistory);
+                Console.WriteLine(Printer.RoomHistory);
                 Console.ReadLine();
                 return;
             }
@@ -261,37 +260,37 @@ namespace TextDungeon
 
             if (Attack(action))
             {
-                pr.Reader();
+                Printer.Reader();
                 return;
             }
 
             if (StrongAttack(action))
             {
-                pr.Reader();
+                Printer.Reader();
                 return;
             }
 
             if (UsePotion(action))
             {
                 EnemyAttack();
-                pr.Reader();
+                Printer.Reader();
                 return;
             }
 
             if (action.Equals("l") || action.Equals("look"))
             {
-                if (!(currentRoom.Item == null)) pr.PrintLine("There is a {0}", currentRoom.Item.Name);
+                if (!(currentRoom.Item == null)) Printer.PrintLine("There is a {0}", currentRoom.Item.Name);
 
-                else pr.PrintLine("There is nothing here!");
+                else Printer.PrintLine("There is nothing here!");
                 EnemyAttack();
-                pr.Reader();
+                Printer.Reader();
                 return;
             }
 
             if (TakeItem(action))
             {
                 EnemyAttack();
-                pr.Reader();
+                Printer.Reader();
 
                 return;
             }
@@ -299,7 +298,7 @@ namespace TextDungeon
                 if (action.Equals("talk"))
                 {
 
-                    pr.Reader();
+                    Printer.Reader();
                     return;
                 }
 
@@ -308,16 +307,16 @@ namespace TextDungeon
 
                 if (playerCharacter.CurrentQuest != null)
                 {
-                    pr.PrintLine(playerCharacter.CurrentQuest.Name);
-                    pr.PrintLine("You have killed {0}/{1} {2}", playerCharacter.CurrentQuest.CurrentAmount, playerCharacter.CurrentQuest.TotalAmount, playerCharacter.CurrentQuest.EnemyToKill.Name);
+                    Printer.PrintLine(playerCharacter.CurrentQuest.Name);
+                    Printer.PrintLine("You have killed {0}/{1} {2}", playerCharacter.CurrentQuest.CurrentAmount, playerCharacter.CurrentQuest.TotalAmount, playerCharacter.CurrentQuest.EnemyToKill.Name);
                 }
-                else pr.PrintLine("No current quest");
-                pr.Reader();
+                else Printer.PrintLine("No current quest");
+                Printer.Reader();
                 return;
             }
 
-            pr.PrintLine("invalid action");
-            pr.Reader();
+            Printer.PrintLine("invalid action");
+            Printer.Reader();
             EnemyAttack();
 
         }
@@ -352,7 +351,7 @@ namespace TextDungeon
 
                 } while (command != "q");
                 Console.Clear();
-                Console.WriteLine(pr.RoomHistory);
+                Console.WriteLine(Printer.RoomHistory);
                 return true;
             }
 
@@ -538,7 +537,7 @@ namespace TextDungeon
 
                     Console.WriteLine("You head north");
 
-                    pr.Reader();
+                    Printer.Reader();
 
                     EnemySneakAttack();
                 }
@@ -556,7 +555,7 @@ namespace TextDungeon
                     playerCharacter.Recovery();
 
                     Console.WriteLine("You head south");
-                    pr.Reader();
+                    Printer.Reader();
 
                     EnemySneakAttack();
                 }
@@ -574,7 +573,7 @@ namespace TextDungeon
                     playerCharacter.Recovery();
 
                     Console.WriteLine("You head east");
-                    pr.Reader();
+                    Printer.Reader();
 
                     EnemySneakAttack();
                 }
@@ -592,7 +591,7 @@ namespace TextDungeon
                     playerCharacter.Recovery();
 
                     Console.WriteLine("You head west");
-                    pr.Reader();
+                    Printer.Reader();
 
                     EnemySneakAttack();
                 }
@@ -605,9 +604,9 @@ namespace TextDungeon
                 action.Equals("e") || action.Equals("east") ||
                 action.Equals("w") || action.Equals("west"))
             {
-                pr.PrintLine("You walk into the wall!");
+                Printer.PrintLine("You walk into the wall!");
                 EnemyAttack();
-                pr.Reader();
+                Printer.Reader();
                 return true;
             }
 
@@ -620,9 +619,9 @@ namespace TextDungeon
             if (currentRoom.Enemy != null && currentRoom.Enemy.IsAgressive)
             {
                 GameGUI();
-                pr.PrintLine("");
+                Printer.PrintLine("");
                 EnemyAttack();
-                pr.Reader();
+                Printer.Reader();
             }
         }
 
@@ -645,7 +644,7 @@ namespace TextDungeon
                 damage = currentRoom.Enemy.TakeDamage(damage);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                pr.PrintLine("You did {0} damage!", damage);
+                Printer.PrintLine("You did {0} damage!", damage);
                 Console.ForegroundColor = ConsoleColor.Gray;
 
 
@@ -668,7 +667,7 @@ namespace TextDungeon
                 damage = currentRoom.Enemy.TakeDamage(damage);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                pr.PrintLine("You did {0} damage!", damage);
+                Printer.PrintLine("You did {0} damage!", damage);
                 Console.ForegroundColor = ConsoleColor.Gray;
 
                 EnemyDeath();
@@ -688,19 +687,19 @@ namespace TextDungeon
 
                 if (!(currentRoom.Enemy == null))
                 {
-                    pr.PrintLine("You can not take items while there is an enemy in the room.");
+                    Printer.PrintLine("You can not take items while there is an enemy in the room.");
                 }
 
                 else if (!(currentRoom.Item == null))
                 {
-                    pr.PrintLine("You took the {0}!", currentRoom.Item.Name);
+                    Printer.PrintLine("You took the {0}!", currentRoom.Item.Name);
                     playerCharacter.AddToInventory(currentRoom.Item);
                     currentRoom.RemoveItem();
                     currentRoom.UpdateRoomIfItemIsRemovedFromRoom();
 
                 }
 
-                else pr.PrintLine("There is nothing here!");
+                else Printer.PrintLine("There is nothing here!");
                 return true;
             }
             return false;
@@ -711,11 +710,11 @@ namespace TextDungeon
             if (action.Equals("p") || action.Equals("potion"))
             {
                 int heal = playerCharacter.UsePotion();
-                if (heal == 0) pr.PrintLine("You are out of potions");
+                if (heal == 0) Printer.PrintLine("You are out of potions");
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    pr.PrintLine("You heal for {0} hp", heal);
+                    Printer.PrintLine("You heal for {0} hp", heal);
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
                 return true;
@@ -754,7 +753,7 @@ namespace TextDungeon
                             currentRoom.NPC.Interact();
                             PlayerCharacter.AddToMoney(playerCharacter.CurrentQuest.RewardMoney);
                             playerCharacter.AddToInventory(playerCharacter.CurrentQuest.RewardItem);
-                            pr.PrintLine("You completed the quest: {0}!", playerCharacter.CurrentQuest.Name);
+                            Printer.PrintLine("You completed the quest: {0}!", playerCharacter.CurrentQuest.Name);
                             playerCharacter.CurrentQuest = null;
                         }
 
@@ -768,7 +767,7 @@ namespace TextDungeon
 
                 }
 
-                else pr.PrintLine("There is no one to talk to!");
+                else Printer.PrintLine("There is no one to talk to!");
 
                 return true;
             }
@@ -785,7 +784,7 @@ namespace TextDungeon
                 if (!(currentRoom.Enemy == null))
                 {
                     newLocation = false;
-                    pr.PrintLine("You cannot unlock a door while there is an enemy in the room!");
+                    Printer.PrintLine("You cannot unlock a door while there is an enemy in the room!");
                     return true;
                 }
 
@@ -797,16 +796,16 @@ namespace TextDungeon
 
                     do
                     {
-                        pr.PrintLine("Do you want to unlock the door? (y/n)");
-                        string useKey = pr.Reader().ToLower();
+                        Printer.PrintLine("Do you want to unlock the door? (y/n)");
+                        string useKey = Printer.Reader().ToLower();
 
                         if (useKey.Equals("yes") || (useKey.Equals("y")))
                         {
 
-                            pr.PrintLine("You unlocked the door!");
+                            Printer.PrintLine("You unlocked the door!");
                             connection.Unlock();
                             playerCharacter.Inventory.RemoveItem(playerCharacter.Inventory.ItemList.Find(x => x.Name == "Key"));
-                            pr.Reader();
+                            Printer.Reader();
                             return true;
                         }
                         else if (useKey.Equals("no") || (useKey.Equals("n")))
@@ -820,8 +819,8 @@ namespace TextDungeon
                 else
                 {
                     newLocation = false;
-                    pr.PrintLine("The door is locked!");
-                    pr.Reader();
+                    Printer.PrintLine("The door is locked!");
+                    Printer.Reader();
                     return true;
                 }
             }
@@ -836,7 +835,7 @@ namespace TextDungeon
                 int damage = currentRoom.Enemy.Attack();
                 damage = playerCharacter.TakeDamage(damage);
                 Console.ForegroundColor = ConsoleColor.Red;
-                pr.PrintLine("the {1} {2}s you for {0} damage!", damage, currentRoom.Enemy.Name, currentRoom.Enemy.AttackName.ToLower());
+                Printer.PrintLine("the {1} {2}s you for {0} damage!", damage, currentRoom.Enemy.Name, currentRoom.Enemy.AttackName.ToLower());
                 Console.ForegroundColor = ConsoleColor.Gray;
 
             }
@@ -847,16 +846,16 @@ namespace TextDungeon
             if (currentRoom.Enemy.Hp <= 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                pr.PrintLine("You killed the {0}!", currentRoom.Enemy.Name);
+                Printer.PrintLine("You killed the {0}!", currentRoom.Enemy.Name);
                 Console.ForegroundColor = ConsoleColor.Gray;
 
                 if (!(currentRoom.Enemy.Money == 0))
                 {
-                    pr.PrintLine("You Got {0} gc!", currentRoom.Enemy.Money);
+                    Printer.PrintLine("You Got {0} gc!", currentRoom.Enemy.Money);
                     PlayerCharacter.AddToMoney(currentRoom.Enemy.Money);
                 }
 
-                pr.PrintLine("You Got {0} exp!", currentRoom.Enemy.Exp);
+                Printer.PrintLine("You Got {0} exp!", currentRoom.Enemy.Exp);
                 playerCharacter.AddExp(currentRoom.Enemy.Exp);
 
                 CheckQuest();
