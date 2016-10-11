@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace TextDungeon
 {
-
     class Program
 
     {

@@ -13,8 +13,5 @@ namespace TextDungeon
         {
             Equiptable = true;            
         }
-
-
     }
-
 }

@@ -98,7 +98,6 @@ namespace TextDungeon
         public int UpdateQuest() // uppdaterar questet 
         {
 
-
             if (TotalAmount != CurrentAmount)
                 currentAmount++;
 

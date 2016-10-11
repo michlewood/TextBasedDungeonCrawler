@@ -5,6 +5,8 @@ namespace TextDungeon
 {
     public class PlayerCharacter : Creature
     {
+        #region Variables and Properties
+
         private Inventory inventory = new Inventory();
         internal Inventory Inventory
         {
@@ -174,6 +176,8 @@ namespace TextDungeon
             }
 
         }
+
+        #endregion
 
         public PlayerCharacter(string name) : base(name, 30) //konstruktorn som skapar en ny spelare
         {

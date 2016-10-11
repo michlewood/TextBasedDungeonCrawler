@@ -23,19 +23,7 @@ namespace TextDungeon
             }
         }
 
-        private static string roomHistory;
-        public static string RoomHistory
-        {
-            get
-            {
-                return roomHistory;
-            }
-            private set
-            {
-                roomHistory = value;
-            }
-        }
-
+        public static string RoomHistory { get; private set; }
         public static void PrintLine(string input, params object[] arg) //(Används oftast istället för Console.WriteLine) skriver ut det stringen som är i stringen och sparar det till historia så att det kan skrivas igen 
         {
             string remadeInput = AddArgToString(input, arg);

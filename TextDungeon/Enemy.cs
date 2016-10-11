@@ -38,7 +38,7 @@ namespace TextDungeon
 
         }
 
-        public Rat() : base("Rat", 2, "Nibble", 1, 1, 3, false) //konstruktor för råtta
+        public Rat() : base("Rat", 2, "Nibble", 2, 2, 3, false) //konstruktor för råtta
         {
 
         }
@@ -53,7 +53,7 @@ namespace TextDungeon
 
     public class Dog : Enemy // fiende: hund
     {
-        public Dog() : base ("Dog", 5, "Bite", 3, 3, 6, false) //konstruktor för hund 
+        public Dog() : base ("Dog", 5, "Bite", 3, 4, 6, false) //konstruktor för hund 
         {
 
         }

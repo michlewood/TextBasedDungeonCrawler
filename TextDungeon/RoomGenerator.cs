@@ -41,7 +41,8 @@ namespace TextDungeon
             if (floor == 1) { FirstFloorRooms(); FirstFloorDoors(); }
             if (floor == 2) { SecondFloorRooms(); SecondFloorDoors(); }
         }
-
+        
+        #region Second Floor
         private void SecondFloorDoors()
         {
             new Connection.AddDoor(new Connection(RoomList.ElementAt(0), RoomList.ElementAt(1), false));
@@ -52,7 +53,7 @@ namespace TextDungeon
             RoomList.Add(new Room(null, null, new Rat(true), false, 7, false, "new room", null, null));
             RoomList.Add(new StairRoom(8, false, "You see stairs going down", false));
         }
-
+        #endregion
 
         #region FirstFloor
         private void FirstFloorRooms() //metod som skapar alla rum som finns i spelet
@@ -69,6 +70,7 @@ namespace TextDungeon
             RoomList.Add(new StairRoom(8, false, "You see stairs going up", true));
 
         }
+
         private void FirstFloorDoors() // metod som skapar alla dörrar som rummen sitter ihop med som i sin tur leder till ett annat rum 
         {
             new Connection.AddDoor(new Connection(RoomList.ElementAt(1), RoomList.ElementAt(0), false));
