@@ -112,36 +112,6 @@ namespace TextDungeon
             private set { maxDamage = value; }
         }
 
-        #region stats
-        private int happiness = 1;
-        public int Happiness
-        {
-            get
-            {
-                return happiness;
-            }
-
-            private set
-            {
-                happiness = value;
-            }
-        }
-
-        private int determination = 1;
-        public int Determination
-        {
-            get
-            {
-                return determination;
-            }
-
-            private set
-            {
-                determination = value;
-            }
-        }
-        #endregion
-
         Random rng = new Random();
 
         public Quest CurrentQuest { get; set; } //det quest som spelaren har just nu
@@ -177,12 +147,41 @@ namespace TextDungeon
 
         }
 
+        #region stats
+        private int happiness = 1;
+        public int Happiness
+        {
+            get
+            {
+                return happiness;
+            }
+
+            private set
+            {
+                happiness = value;
+            }
+        }
+
+        private int determination = 1;
+        public int Determination
+        {
+            get
+            {
+                return determination;
+            }
+
+            private set
+            {
+                determination = value;
+            }
+        }
+        #endregion
+
         #endregion
 
         public PlayerCharacter(string name) : base(name, 30) //konstruktorn som skapar en ny spelare
         {
             AddToInventory(new Potion());
-
         }
 
         internal void AddToInventory(Item item) // metod som lägger till en item i inventory

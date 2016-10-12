@@ -874,7 +874,6 @@ namespace TextDungeon
         {
             if (playerCharacter.CurrentQuest != null)
             {
-                Console.WriteLine(playerCharacter.CurrentQuest.GetType());
                 if (playerCharacter.CurrentQuest.GetType() == new KillQuest().GetType())
                 {
                     KillQuest tempQuest = (KillQuest)playerCharacter.CurrentQuest;

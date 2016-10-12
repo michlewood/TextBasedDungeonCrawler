@@ -24,6 +24,7 @@ namespace TextDungeon
         }
 
         public static string RoomHistory { get; private set; }
+
         public static void PrintLine(string input, params object[] arg) //(Används oftast istället för Console.WriteLine) skriver ut det stringen som är i stringen och sparar det till historia så att det kan skrivas igen 
         {
             string remadeInput = AddArgToString(input, arg);
@@ -45,18 +46,20 @@ namespace TextDungeon
             int numberBetweenBrackets;
             string remadeInput = "";
 
-            for (int i = 0; i < input.Length; i++)
+            if (input != null)
             {
-                if (input[i] == '{' && int.TryParse("" + input[i + 1], out numberBetweenBrackets) && input[i + 2] == '}')
+                for (int i = 0; i < input.Length; i++)
                 {
-                    remadeInput += "" + arg[numberBetweenBrackets];
-                    i += 2;
+                    if (input[i] == '{' && int.TryParse("" + input[i + 1], out numberBetweenBrackets) && input[i + 2] == '}')
+                    {
+                        remadeInput += "" + arg[numberBetweenBrackets];
+                        i += 2;
+                    }
+
+                    else remadeInput += "" + input[i];
+
                 }
-
-                else remadeInput += "" + input[i];
-
             }
-
             return remadeInput;
         }
 
