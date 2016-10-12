@@ -2,7 +2,7 @@
 
 namespace TextDungeon
 {
-    public class Quest
+    abstract public class Quest
     {
         private string name; //namnet på questen
         public string Name
@@ -15,48 +15,7 @@ namespace TextDungeon
             {
                 name = value;
             }
-        }
-
-        private Enemy enemyToKill; //typen av fiende som ska dödas
-        public Enemy EnemyToKill
-        {
-            get
-            {
-                return enemyToKill;
-            }
-
-            set
-            {
-                enemyToKill = value;
-            }
-        }
-
-        private int totalAmount; //hur många som ska dödas
-        public int TotalAmount
-        {
-            get
-            {
-                return totalAmount;
-            }
-            set
-            {
-                totalAmount = value;
-            }
-        }
-
-        private int currentAmount; // hur många man har dödat
-        public int CurrentAmount
-        {
-            get
-            {
-                return currentAmount;
-            }
-
-            private set
-            {
-                currentAmount = value;
-            }
-        }
+        } 
 
         private int rewardMoney; // pengar man får för att klara questet
         public int RewardMoney
@@ -85,34 +44,90 @@ namespace TextDungeon
 
         }
 
-        internal Quest(string name, Enemy enemyToKill, int totalAmount, int rewardMoney, Item rewardItem) //konstruktor för quest (om man t ex inte vill att man ska få ett item skriv null) 
+        protected Quest(string name, int rewardMoney, Item rewardItem) //konstruktor för quest (om man t ex inte vill att man ska få ett item skriv null) 
         {
             Name = name;
-            EnemyToKill = enemyToKill;
-            TotalAmount = totalAmount;
-            CurrentAmount = 0;
             RewardMoney = rewardMoney;
             RewardItem = rewardItem;
         }
 
-        public int UpdateQuest() // uppdaterar questet 
-        {
+        protected Quest() { }
 
-            if (TotalAmount != CurrentAmount)
+        abstract public int UpdateQuest(); // uppdaterar questet 
+
+        abstract public void ResetQuest();
+
+        abstract public bool CheckCompleted(); // kollar om målet i questen är avklarat 
+    }
+
+    public class KillQuest : Quest
+    {
+
+        private Enemy enemyToKill; //typen av fiende som ska dödas
+        public Enemy EnemyToKill
+        {
+            get
+            {
+                return enemyToKill;
+            }
+
+            set
+            {
+                enemyToKill = value;
+            }
+        }
+
+        private int totalAmount; //hur många som ska dödas
+        public int TotalAmountOfEnemies
+        {
+            get
+            {
+                return totalAmount;
+            }
+            set
+            {
+                totalAmount = value;
+            }
+        }
+
+        private int currentAmount = 0; // hur många man har dödat
+        public int CurrentAmountOfEnemiesKilled
+        {
+            get
+            {
+                return currentAmount;
+            }
+
+            private set
+            {
+                currentAmount = value;
+            }
+        }
+
+        public KillQuest() { }
+
+        public KillQuest(string name, Enemy enemyToKill, int totalAmountOfEnemies, int rewardMoney, Item rewardItem) : base(name, rewardMoney, rewardItem)
+        {
+            EnemyToKill = enemyToKill;
+            TotalAmountOfEnemies = totalAmountOfEnemies;
+        }
+
+        public override int UpdateQuest() // uppdaterar questet 
+        {
+            if (TotalAmountOfEnemies != CurrentAmountOfEnemiesKilled)
                 currentAmount++;
 
             return currentAmount;
-
         }
 
-        internal void ResetQuest()
+        public override void ResetQuest()
         {
-            CurrentAmount = 0;
+            CurrentAmountOfEnemiesKilled = 0;
         }
 
-        internal bool CheckCompleted() // kollar om målet i questen är avklarat 
+        public override bool CheckCompleted()
         {
-            if (CurrentAmount == TotalAmount) return true;
+            if (CurrentAmountOfEnemiesKilled == TotalAmountOfEnemies) return true;
             else return false;
         }
     }

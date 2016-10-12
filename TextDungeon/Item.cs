@@ -2,7 +2,7 @@
 
 namespace TextDungeon
 {
-    internal abstract class Item // en abstrakt klass för items som alla olika items typer ärver ifrån 
+    public abstract class Item // en abstrakt klass för items som alla olika items typer ärver ifrån 
     {
 
         public string Name { get; protected set; } //alla items ska ha ett namn
@@ -25,7 +25,7 @@ namespace TextDungeon
 
     }
 
-    internal class Potion : Item //item: potion 
+    public class Potion : Item //item: potion 
     {
         private readonly int heal = 25; // den mängd som potions ska hela
         public int Heal { get { return heal; } }
@@ -41,7 +41,7 @@ namespace TextDungeon
         }
     }
 
-    internal class Key : Item //item: key - låser upp dörrar
+    public class Key : Item //item: key - låser upp dörrar
     {
         internal Key() : base ("Key", 50) // konstruktor för key 
         {

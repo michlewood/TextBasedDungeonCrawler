@@ -307,7 +307,11 @@ namespace TextDungeon
                 if (playerCharacter.CurrentQuest != null)
                 {
                     Printer.PrintLine(playerCharacter.CurrentQuest.Name);
-                    Printer.PrintLine("You have killed {0}/{1} {2}", playerCharacter.CurrentQuest.CurrentAmount, playerCharacter.CurrentQuest.TotalAmount, playerCharacter.CurrentQuest.EnemyToKill.Name);
+                    if (playerCharacter.CurrentQuest.GetType() == new KillQuest().GetType())
+                    {
+                        KillQuest tempQuest = (KillQuest)playerCharacter.CurrentQuest; 
+                        Printer.PrintLine("You have killed {0}/{1} {2}", tempQuest.CurrentAmountOfEnemiesKilled, tempQuest.TotalAmountOfEnemies, tempQuest.EnemyToKill.Name);
+                    }
                 }
                 else Printer.PrintLine("No current quest");
                 Printer.Reader();
@@ -870,11 +874,14 @@ namespace TextDungeon
         {
             if (playerCharacter.CurrentQuest != null)
             {
-
-                if (currentRoom.Enemy.Name == playerCharacter.CurrentQuest.EnemyToKill.Name)
+                Console.WriteLine(playerCharacter.CurrentQuest.GetType());
+                if (playerCharacter.CurrentQuest.GetType() == new KillQuest().GetType())
                 {
-                    playerCharacter.CurrentQuest.UpdateQuest();
-
+                    KillQuest tempQuest = (KillQuest)playerCharacter.CurrentQuest;
+                    if (currentRoom.Enemy.Name == tempQuest.EnemyToKill.Name)
+                    {
+                        tempQuest.UpdateQuest();
+                    }
                 }
             }
         }
