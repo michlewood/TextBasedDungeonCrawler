@@ -7,8 +7,8 @@ namespace TextDungeon
     {
         #region Variables and Properties
 
-        private Inventory inventory = new Inventory();
-        internal Inventory Inventory
+        private static Inventory inventory = new Inventory();
+        internal static Inventory Inventory
         {
             get
             {
@@ -184,10 +184,9 @@ namespace TextDungeon
             AddToInventory(new Potion());
         }
 
-        internal void AddToInventory(Item item) // metod som lägger till en item i inventory
+        public static void AddToInventory(Item item) // metod som lägger till en item i inventory
         {
             inventory.AddItem(item);
-
         }
 
         public override int Attack() //metod som returnerar hur mycket skada spelaren ska göra med en simpel attack

@@ -78,5 +78,14 @@ namespace TextDungeon
             RoomHistory = "";
         }
 
+        public static string ReadKey(bool intercept = false)
+        {
+            string input = Console.ReadKey(intercept).Key.ToString();
+            if (intercept) input = "\n";
+
+            RoomHistory += History = input;
+
+            return input;
+        }
     }
 }

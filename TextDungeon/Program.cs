@@ -48,10 +48,10 @@ namespace TextDungeon
                     Printer.PrintLine("You Died");
                     Console.ForegroundColor = ConsoleColor.Gray;
 
-                    Console.ReadLine();
+                    Console.ReadKey(true);
                 }
 
-                if(!win) win = currentRoom.IsWinOnEntry;
+                if (!win) win = currentRoom.IsWinOnEntry;
             }
             if (win)
             {
@@ -61,7 +61,7 @@ namespace TextDungeon
                 while (true)
                 {
 
-                    Console.ReadLine();
+                    Console.ReadKey(true);
 
                     win.Stop();
                     thread.Join();
@@ -131,7 +131,6 @@ namespace TextDungeon
                 }
             }
             Console.WriteLine();
-
         }
 
         private void CreaturesInRoomBar()
@@ -204,21 +203,20 @@ namespace TextDungeon
 
             if (action.Equals("greed is good"))
             {
-                playerCharacter.AddToInventory(new Potion());
-                playerCharacter.AddToInventory(new Potion());
-                playerCharacter.AddToInventory(new Key());
+                PlayerCharacter.AddToInventory(new Potion());
+                PlayerCharacter.AddToInventory(new Potion());
+                PlayerCharacter.AddToInventory(new Key());
 
-                playerCharacter.AddToInventory(new Dagger());
-                playerCharacter.AddToInventory(new Shirt());
+                PlayerCharacter.AddToInventory(new Dagger());
+                PlayerCharacter.AddToInventory(new Shirt());
                 Console.WriteLine("The Gods have answered your prayer!");
-                Console.ReadLine();
+                Console.ReadKey(true);
                 return;
-
             }
 
             if (action.Equals("use stairs") || action.Equals("us"))
             {
-                if(currentRoom.TypeOfRoom == "Stairroom")
+                if (currentRoom.TypeOfRoom == "Stairroom")
                 {
                     StairRoom tempRoom = (StairRoom)currentRoom;
                     tempRoom.UseStairs();
@@ -240,7 +238,7 @@ namespace TextDungeon
             if (action.Equals("history"))
             {
                 Console.WriteLine(Printer.History);
-                Console.ReadLine();
+                Console.ReadKey(true);
                 return;
             }
 
@@ -248,7 +246,7 @@ namespace TextDungeon
             {
                 Console.Clear();
                 Console.WriteLine(Printer.RoomHistory);
-                Console.ReadLine();
+                Console.ReadKey(true);
                 return;
             }
 
@@ -259,20 +257,20 @@ namespace TextDungeon
 
             if (Attack(action))
             {
-                Printer.Reader();
+                Printer.ReadKey(true);
                 return;
             }
 
             if (StrongAttack(action))
             {
-                Printer.Reader();
+                Printer.ReadKey(true);
                 return;
             }
 
             if (UsePotion(action))
             {
                 EnemyAttack();
-                Printer.Reader();
+                Printer.ReadKey(true);
                 return;
             }
 
@@ -282,14 +280,14 @@ namespace TextDungeon
 
                 else Printer.PrintLine("There is nothing here!");
                 EnemyAttack();
-                Printer.Reader();
+                Printer.ReadKey(true);
                 return;
             }
 
             if (TakeItem(action))
             {
                 EnemyAttack();
-                Printer.Reader();
+                Printer.ReadKey(true);
 
                 return;
             }
@@ -297,7 +295,7 @@ namespace TextDungeon
                 if (action.Equals("talk"))
                 {
 
-                    Printer.Reader();
+                    Printer.ReadKey(true);
                     return;
                 }
 
@@ -309,17 +307,17 @@ namespace TextDungeon
                     Printer.PrintLine(playerCharacter.CurrentQuest.Name);
                     if (playerCharacter.CurrentQuest.GetType() == new KillQuest().GetType())
                     {
-                        KillQuest tempQuest = (KillQuest)playerCharacter.CurrentQuest; 
+                        KillQuest tempQuest = (KillQuest)playerCharacter.CurrentQuest;
                         Printer.PrintLine("You have killed {0}/{1} {2}", tempQuest.CurrentAmountOfEnemiesKilled, tempQuest.TotalAmountOfEnemies, tempQuest.EnemyToKill.Name);
                     }
                 }
                 else Printer.PrintLine("No current quest");
-                Printer.Reader();
+                Printer.ReadKey(true);
                 return;
             }
 
             Printer.PrintLine("invalid action");
-            Printer.Reader();
+            Printer.ReadKey(true);
             EnemyAttack();
 
         }
@@ -330,35 +328,24 @@ namespace TextDungeon
         {
             if (action.Equals("Character") || action.Equals("c") || action.Equals("inventory") || action.Equals("i"))
             {
-                
-
                 string command;
                 do
                 {
                     Console.Clear();
-
                     Console.WriteLine(playerCharacter.Name);
                     CharacterStatScreen();
                     EquipmentScreen();
                     CharacterInfoScreen();
-
                     List<Item> uniqueItems = InventoryScreen();
-
-
                     Console.WriteLine("What Would you like to do? (q to exit)");
                     command = Console.ReadLine().ToLower();
-                    if (UsePotion(command)) Console.ReadLine();
-                    else if (Equipt(command, uniqueItems)) Console.ReadLine();
-
-
-
+                    if (UsePotion(command)) Console.ReadKey(true);
+                    else if (Equipt(command, uniqueItems)) Console.ReadKey(true);
                 } while (command != "q");
                 Console.Clear();
                 Console.WriteLine(Printer.RoomHistory);
                 return true;
             }
-
-
             return false;
         }
 
@@ -366,7 +353,7 @@ namespace TextDungeon
         {
             int row = 1;
             int column = 0;
-            
+
             Console.SetCursorPosition(column, row++);
             Console.WriteLine("Hp : {0}/{1}", playerCharacter.Hp, playerCharacter.MaxHp);
             Console.SetCursorPosition(column, row++);
@@ -378,7 +365,7 @@ namespace TextDungeon
             Console.SetCursorPosition(column, row++);
             Console.WriteLine("Gp : {0}", PlayerCharacter.AmountOfMoney);
 
-            Console.SetCursorPosition(0, row+1);
+            Console.SetCursorPosition(0, row + 1);
         }
 
         private void CharacterStatScreen()
@@ -404,25 +391,23 @@ namespace TextDungeon
             Console.SetCursorPosition(column, row++);
             Console.WriteLine("Equipment:");
             Console.SetCursorPosition(column, row++);
-            if (playerCharacter.EquiptedArmor != null) Console.WriteLine("Armor: {0}", playerCharacter.EquiptedArmor.Name);
-            else Console.WriteLine("Armor: None");
+            Console.WriteLine("Armor: {0}", playerCharacter.EquiptedArmor != null ? playerCharacter.EquiptedArmor.Name : "None");
             Console.SetCursorPosition(column, row++);
-            if (playerCharacter.EquiptedWeapon != null) Console.WriteLine("Weapon: {0}", playerCharacter.EquiptedWeapon.Name);
-            else Console.WriteLine("Weapon: None");
+            Console.WriteLine("Weapon: {0}", playerCharacter.EquiptedWeapon != null ? playerCharacter.EquiptedWeapon.Name : "None");
 
         }
 
-        private List<Item> InventoryScreen() 
+        private List<Item> InventoryScreen()
         {
 
             List<Item> uniqueItems = new List<Item>();
 
-            if (playerCharacter.Inventory.ItemList.Count != 0)
+            if (PlayerCharacter.Inventory.ItemList.Count != 0)
             {
 
                 Console.WriteLine("Your inventory contains: ");
 
-                foreach (Item item in playerCharacter.Inventory.ItemList)
+                foreach (Item item in PlayerCharacter.Inventory.ItemList)
                 {
                     if ((uniqueItems.Find(x => x.Name == item.Name)) == null)
                         uniqueItems.Add(item);
@@ -430,19 +415,12 @@ namespace TextDungeon
 
                 foreach (Item item in uniqueItems)
                 {
-                    List<Item> numberOfItems = playerCharacter.Inventory.ItemList.FindAll(x => x.Name == item.Name);
+                    List<Item> numberOfItems = PlayerCharacter.Inventory.ItemList.FindAll(x => x.Name == item.Name);
                     Console.WriteLine(item.Name + " " + numberOfItems.Count);
-
                 }
             }
 
             else Console.WriteLine("Inventory is empty!");
-
-
-
-
-
-
 
             return uniqueItems;
         }
@@ -493,7 +471,6 @@ namespace TextDungeon
                     }
                     else if (itemToEquipt.IsArmor)
                     {
-
                         playerCharacter.EquiptArmor((Armor)itemToEquipt);
                         Console.WriteLine("equipted armor: {0}", playerCharacter.EquiptedArmor.Name);
                     }
@@ -519,7 +496,7 @@ namespace TextDungeon
                 "\"help\" to get the helpscreen \n\"history\" to see everything that has happend \n\"rh\" to see what has happend in this room\n" +
                 "\"q\" to see current quest \n\n\"talk\" to talk to Npcs\n" +
                 "\"c\" to open the character screen, \n\"p\" to use potion\n\"Equipt name\" to equipt something with that name\n\n\"a\" to attack \n\"sa\" to do a strong attack");
-            Console.ReadLine();
+            Console.ReadKey(true);
         }
 
         #endregion
@@ -540,7 +517,7 @@ namespace TextDungeon
 
                     Console.WriteLine("You head north");
 
-                    Printer.Reader();
+                    Printer.ReadKey(true);
 
                     EnemySneakAttack();
                 }
@@ -558,7 +535,7 @@ namespace TextDungeon
                     playerCharacter.Recovery();
 
                     Console.WriteLine("You head south");
-                    Printer.Reader();
+                    Printer.ReadKey(true);
 
                     EnemySneakAttack();
                 }
@@ -576,7 +553,7 @@ namespace TextDungeon
                     playerCharacter.Recovery();
 
                     Console.WriteLine("You head east");
-                    Printer.Reader();
+                    Printer.ReadKey(true);
 
                     EnemySneakAttack();
                 }
@@ -594,7 +571,7 @@ namespace TextDungeon
                     playerCharacter.Recovery();
 
                     Console.WriteLine("You head west");
-                    Printer.Reader();
+                    Printer.ReadKey(true);
 
                     EnemySneakAttack();
                 }
@@ -609,7 +586,7 @@ namespace TextDungeon
             {
                 Printer.PrintLine("You walk into the wall!");
                 EnemyAttack();
-                Printer.Reader();
+                Printer.ReadKey(true);
                 return true;
             }
 
@@ -624,7 +601,7 @@ namespace TextDungeon
                 GameGUI();
                 Printer.PrintLine("");
                 EnemyAttack();
-                Printer.Reader();
+                Printer.ReadKey(true);
             }
         }
 
@@ -687,21 +664,17 @@ namespace TextDungeon
         {
             if (action.Equals("t") || action.Equals("take"))
             {
-
                 if (!(currentRoom.Enemy == null))
                 {
                     Printer.PrintLine("You can not take items while there is an enemy in the room.");
                 }
-
                 else if (!(currentRoom.Item == null))
                 {
                     Printer.PrintLine("You took the {0}!", currentRoom.Item.Name);
-                    playerCharacter.AddToInventory(currentRoom.Item);
+                    PlayerCharacter.AddToInventory(currentRoom.Item);
                     currentRoom.RemoveItem();
                     currentRoom.UpdateRoomIfItemIsRemovedFromRoom();
-
                 }
-
                 else Printer.PrintLine("There is nothing here!");
                 return true;
             }
@@ -744,9 +717,7 @@ namespace TextDungeon
                         {
                             tempGiver = (QuestGiver)currentRoom.NPC;
                             playerCharacter.CurrentQuest = tempGiver.GiveQuest();
-
                         }
-
                     }
 
                     else if (currentRoom.NPC.Name.Equals("Quest Giver") && playerCharacter.CurrentQuest != null)
@@ -754,9 +725,7 @@ namespace TextDungeon
                         if (playerCharacter.CurrentQuest.CheckCompleted())
                         {
                             currentRoom.NPC.Interact();
-                            PlayerCharacter.AddToMoney(playerCharacter.CurrentQuest.RewardMoney);
-                            playerCharacter.AddToInventory(playerCharacter.CurrentQuest.RewardItem);
-                            Printer.PrintLine("You completed the quest: {0}!", playerCharacter.CurrentQuest.Name);
+
                             playerCharacter.CurrentQuest = null;
                         }
 
@@ -791,11 +760,9 @@ namespace TextDungeon
                     return true;
                 }
 
-                if (!(playerCharacter.Inventory.ItemList.Find(x => x.Name == "Key") == null))
+                if (!(PlayerCharacter.Inventory.ItemList.Find(x => x.Name == "Key") == null))
                 {
                     newLocation = false;
-
-
 
                     do
                     {
@@ -807,8 +774,8 @@ namespace TextDungeon
 
                             Printer.PrintLine("You unlocked the door!");
                             connection.Unlock();
-                            playerCharacter.Inventory.RemoveItem(playerCharacter.Inventory.ItemList.Find(x => x.Name == "Key"));
-                            Printer.Reader();
+                            PlayerCharacter.Inventory.RemoveItem(PlayerCharacter.Inventory.ItemList.Find(x => x.Name == "Key"));
+                            Printer.ReadKey(true);
                             return true;
                         }
                         else if (useKey.Equals("no") || (useKey.Equals("n")))
@@ -823,7 +790,7 @@ namespace TextDungeon
                 {
                     newLocation = false;
                     Printer.PrintLine("The door is locked!");
-                    Printer.Reader();
+                    Printer.ReadKey(true);
                     return true;
                 }
             }

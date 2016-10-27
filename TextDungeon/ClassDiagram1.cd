@@ -31,7 +31,7 @@
   <Class Name="TextDungeon.Enemy" Collapsed="true">
     <Position X="9.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQQAAAAABABAAAAAAAAAAAAAACAAAAACAAAAAAAAE=</HashCode>
+      <HashCode>AAAQAAAAAEAABAAAQAAAAAIAAAAAAAAAACAAAAAAAAE=</HashCode>
       <FileName>Enemy.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -94,7 +94,7 @@
   <Class Name="TextDungeon.NPC" Collapsed="true">
     <Position X="4" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIIAAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NPC.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -115,42 +115,42 @@
   <Class Name="TextDungeon.PlayerCharacter" Collapsed="true">
     <Position X="0.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEBAAQBgABCQwAAQAAACQRJMEAEgADACAAAgAABIA=</HashCode>
+      <HashCode>AAAEBAEQhgABCYwAAQAAACYRJMECMgADACAAAgAABIA=</HashCode>
       <FileName>PlayerCharacter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextDungeon.Printer" Collapsed="true">
     <Position X="18" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAABAAACAAAAAAAABACAQAEAgI=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAACAAAAACAABACAQAEAgI=</HashCode>
       <FileName>Printer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextDungeon.Program" Collapsed="true">
     <Position X="14.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AoAAAAAgApAAQAMgCwAEACAAAIAgC8ogAEAABAIAQIg=</HashCode>
+      <HashCode>AoAAAAAgBpAAwAMgCwAEACAAAIAgCsogAEAABAIAQIg=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextDungeon.Quest" Collapsed="true">
     <Position X="16.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQEAAAFAAAAQIAEAEAAAAAQAAAAEAKEAAECAAAAAAAA=</HashCode>
+      <HashCode>AAEAAABAAAAAIAEAAAAAAAQAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Quest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextDungeon.Room" Collapsed="true">
     <Position X="18" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQgAAAEEAAAAhAAQAIAAEVAAAEAQEQAgQBkgAAAI=</HashCode>
+      <HashCode>AACAQgAAAEEAAAAgAAAAAAAEVAAAEAAEQAgAAkgEAAA=</HashCode>
       <FileName>Room.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextDungeon.RoomGenerator" Collapsed="true">
     <Position X="14.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAAAAIEBAACAAAAAAAAAAAAAAgAA=</HashCode>
+      <HashCode>AAAAAAABAAAAAAAAAAAAIkBAACAAAAAAAAABAAAAgAA=</HashCode>
       <FileName>RoomGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>

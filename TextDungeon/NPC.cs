@@ -30,7 +30,7 @@ namespace TextDungeon
         public Quest Quest { get; protected set; } //den quest som questgivern har
         public bool QuestGiven { get; protected set; } // har questgivern redan get sitt quest till spelaren
 
-        public QuestGiver(Quest quest) : base ("Quest Giver")// konstruktorn för questgivern
+        public QuestGiver(Quest quest) : base("Quest Giver")// konstruktorn för questgivern
         {
             Quest = quest;
         }
@@ -40,48 +40,41 @@ namespace TextDungeon
 
             if (Quest.CheckCompleted())
             {
-
                 Printer.PrintLine("{0}: Thank you very much!", Name);
+                Quest.RewardPlayer();
                 Quest.ResetQuest();
                 QuestGiven = false;
-
             }
-
             else if (QuestGiven)
             {
-
                 Printer.PrintLine("{0}: Please kill the rats!", Name);
-
-
             }
             else
             {
                 string answer;
-                do
+                while (true)
                 {
-
-                    Printer.PrintLine("{0}: Will you kill some rats for me? (y/n)", Name);
-                    answer = Printer.Reader().ToLower();
-                    if (answer == "y" || answer == "yes")
+                    if (Quest.GetType().ToString() == "TextDungeon.KillQuest")
                     {
-                        Printer.PrintLine("{0}: Thank You!", Name);
-                        GiveQuest();
+                        KillQuest tempQuest = (KillQuest)Quest;
+                        Printer.PrintLine("{0}: Will you kill some {1}s for me? (y/n)", Name, tempQuest.EnemyToKill.Name.ToLower());
+                        answer = Printer.Reader().ToLower();
+                        if (answer == "y" || answer == "yes")
+                        {
+                            Printer.PrintLine("{0}: Thank You!", Name);
+                            GiveQuest();
 
-                        return true;
+                            return true;
+                        }
+                        else if (answer == "n" || answer == "no")
+                        {
+                            Printer.PrintLine("{0}: Oh well", Name);
+                            return false;
+                        }
                     }
-                    else if (answer == "n" || answer == "no")
-                    {
-                        Printer.PrintLine("{0}: Oh well", Name);
-                        return false;
-                    }
-
-
-
-                } while (true);
+                } 
             }
-
             return false;
-
         }
 
         internal Quest GiveQuest() // questgivern ger sitt quest
@@ -95,9 +88,9 @@ namespace TextDungeon
     {
         private Item[] itemList = { new Potion(), new Dagger(), new Shirt() };
 
-        public Shopkeep() : base ("Shopkeep")
+        public Shopkeep() : base("Shopkeep")
         {
-            
+
         }
 
         internal override bool Interact()
@@ -156,7 +149,7 @@ namespace TextDungeon
         {
             if (PlayerCharacter.AmountOfMoney >= item.Price)
             {
-                new Inventory().AddItem(item);
+                PlayerCharacter.AddToInventory(item);
                 PlayerCharacter.AddToMoney(-item.Price);
                 return true;
             }

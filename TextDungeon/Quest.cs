@@ -22,6 +22,8 @@ namespace TextDungeon
         abstract public void ResetQuest();
 
         abstract public bool CheckCompleted(); // kollar om målet i questen är avklarat 
+
+        abstract public void RewardPlayer();
     }
 
     public class KillQuest : Quest
@@ -55,6 +57,15 @@ namespace TextDungeon
         {
             if (CurrentAmountOfEnemiesKilled == TotalAmountOfEnemies) return true;
             else return false;
+        }
+
+        public override void RewardPlayer()
+        {
+            PlayerCharacter.AddToMoney(RewardMoney);
+            if (RewardItem != null) PlayerCharacter.AddToInventory(RewardItem);
+            Printer.PrintLine("You completed the quest: {0}!", Name);
+            if (RewardMoney != 0) Printer.PrintLine("You got {0} gp", RewardMoney);
+            if (RewardItem != null) Printer.PrintLine("You got a {0}", RewardItem.Name);
         }
     }
 }

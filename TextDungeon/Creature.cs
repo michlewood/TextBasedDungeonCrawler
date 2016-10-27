@@ -52,7 +52,6 @@ namespace TextDungeon
 
         private void checkHp()
         {
-
             if (Hp > MaxHp) Hp = MaxHp;
         }
 
@@ -60,6 +59,5 @@ namespace TextDungeon
         {
             return rng.Next(min, max);
         }
-
     }
 }
