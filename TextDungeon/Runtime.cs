@@ -77,16 +77,12 @@ namespace TextDungeon
         }
 
         private void GameGUI() //skriver spelarens stats och fiender om de finns 
-
         {
-
             Console.Clear();
             Map();
             RoomDescription();
             CreaturesInRoomBar();
             StatBar();
-
-
         }
 
         private void Map()
@@ -106,37 +102,18 @@ namespace TextDungeon
                 {
                     mapTiles[i] = "@";
                 }
-
                 else mapTiles[i] = "#";
             }
 
-
-            for (int i = 0; i < mapTiles.Length; i++)
+            for (int i = 0; i < 3; i ++)
             {
-                if ((i) % 3 == 0)
+                for (int j = i; j < mapTiles.Length; j+=3)
                 {
-                    if (mapTiles[i] == "") Console.Write("   ");
-                    else Console.Write("[{0}]", mapTiles[i]);
+                    if (mapTiles[j] == "") Console.Write("   ");
+                    else Console.Write("[{0}]", mapTiles[j]); 
                 }
+                Console.WriteLine();
             }
-            Console.WriteLine();
-            for (int i = 0; i < mapTiles.Length; i++)
-            {
-                if ((i) % 3 == 1)
-                {
-                    if (mapTiles[i] == "") Console.Write("   ");
-                    else Console.Write("[{0}]", mapTiles[i]);
-                }
-            }
-            Console.WriteLine(); for (int i = 0; i < mapTiles.Length; i++)
-            {
-                if ((i) % 3 == 2)
-                {
-                    if (mapTiles[i] == "") Console.Write("   ");
-                    else Console.Write("[{0}]", mapTiles[i]);
-                }
-            }
-            Console.WriteLine();
         }
 
         private void CreaturesInRoomBar()
