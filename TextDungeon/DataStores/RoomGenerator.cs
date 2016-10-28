@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextDungeon.Models.Creatures;
+using TextDungeon.Models.Items;
+using TextDungeon.Models.Quests;
+using TextDungeon.Models.Rooms;
 
-namespace TextDungeon
+namespace TextDungeon.DataStores
 {
     class RoomGenerator
     {

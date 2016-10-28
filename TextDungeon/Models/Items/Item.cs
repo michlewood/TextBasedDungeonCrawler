@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TextDungeon
+namespace TextDungeon.Models.Items
 {
     public abstract class Item // en abstrakt klass för items som alla olika items typer ärver ifrån 
     {

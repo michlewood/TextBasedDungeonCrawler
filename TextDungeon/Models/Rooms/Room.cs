@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextDungeon.DataStores;
+using TextDungeon.Models.Creatures;
+using TextDungeon.Models.Items;
 
-namespace TextDungeon
+namespace TextDungeon.Models.Rooms
 {
     class Room
     {

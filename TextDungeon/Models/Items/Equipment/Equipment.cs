@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextDungeon
+namespace TextDungeon.Models.Items.Equipment
 {
     abstract class Equipment : Item
     {

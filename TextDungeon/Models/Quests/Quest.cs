@@ -1,6 +1,8 @@
 ﻿using System;
+using TextDungeon.Models.Creatures;
+using TextDungeon.Models.Items;
 
-namespace TextDungeon
+namespace TextDungeon.Models.Quests
 {
     abstract public class Quest
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using TextDungeon.Models.Items;
 
-namespace TextDungeon
+namespace TextDungeon.DataStores
 {
     internal class Inventory
     {

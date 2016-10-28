@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TextDungeon.DataStores;
+using TextDungeon.Models.Creatures;
+using TextDungeon.Models.Items;
+using TextDungeon.Models.Items.Equipment;
+using TextDungeon.Models.Quests;
+using TextDungeon.Models.Rooms;
 
 namespace TextDungeon
 {

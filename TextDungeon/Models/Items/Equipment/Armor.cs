@@ -1,4 +1,4 @@
-﻿namespace TextDungeon
+﻿namespace TextDungeon.Models.Items.Equipment
 {
     abstract class Armor : Equipment
     {

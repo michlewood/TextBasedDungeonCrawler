@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using TextDungeon.DataStores;
+using TextDungeon.Models.Items;
+using TextDungeon.Models.Items.Equipment;
+using TextDungeon.Models.Quests;
 
-namespace TextDungeon
+namespace TextDungeon.Models.Creatures
 {
     public class PlayerCharacter : Creature
     {

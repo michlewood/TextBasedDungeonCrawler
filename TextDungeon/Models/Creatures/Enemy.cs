@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TextDungeon
+namespace TextDungeon.Models.Creatures
 {
     public abstract class Enemy : Creature  //en abstrakt klass som alla fiender ärver ifrån. ärver i sin tur från creature
     {
