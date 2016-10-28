@@ -58,6 +58,7 @@
     <Compile Include="Quest.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RoomGenerator.cs" />
+    <Compile Include="Runtime.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="Win.cs" />
   </ItemGroup>

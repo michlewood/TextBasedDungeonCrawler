@@ -155,9 +155,9 @@ namespace TextDungeon
 
         public void UseStairs()
         {
-            int floorNumber = Program.roomGenerator.FloorNumber;
-            if(StairsGoUp) Program.roomGenerator = new RoomGenerator(floorNumber+1);
-            else Program.roomGenerator = new RoomGenerator(floorNumber-1);
+            int floorNumber = Runtime.roomGenerator.FloorNumber;
+            if(StairsGoUp) Runtime.roomGenerator = new RoomGenerator(floorNumber+1);
+            else Runtime.roomGenerator = new RoomGenerator(floorNumber-1);
         }
     }
 }
