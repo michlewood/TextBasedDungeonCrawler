@@ -23,7 +23,7 @@ namespace TextDungeon
         }
 
         static bool win = false;
-        bool newLocation = true;
+        public static bool newLocation = true;
         Room currentRoom; //sparar det rum spelaren är i
         public static RoomGenerator roomGenerator = new RoomGenerator(currentFloor); //skapar en RoomGenerator som håller en lista av alla rum som finns
         PlayerCharacter playerCharacter = new PlayerCharacter("Michael"); //Karaktären som spelaren spelar som
@@ -31,9 +31,8 @@ namespace TextDungeon
         {
             Console.Title = "TextBasedDungeonCrawler";
             currentRoom = roomGenerator.GetRoom(1);
-            HelpScreen();
+            Graphics.HelpScreen();
             GameLoop();
-
         }
 
         private void GameLoop() //loopen som spelet alltid går igenom 
@@ -66,7 +65,6 @@ namespace TextDungeon
                 thread.Start();
                 while (true)
                 {
-
                     Console.ReadKey(true);
 
                     win.Stop();
@@ -79,107 +77,12 @@ namespace TextDungeon
         private void GameGUI() //skriver spelarens stats och fiender om de finns 
         {
             Console.Clear();
-            Map();
-            RoomDescription();
-            CreaturesInRoomBar();
-            StatBar();
+            Graphics.Map(currentRoom, roomGenerator);
+            Graphics.RoomDescription(currentRoom);
+            Graphics.CreaturesInRoomBar(currentRoom);
+            Graphics.StatBar(currentRoom, playerCharacter);
         }
-
-        private void Map()
-        {
-            int highestPositionInMap = 0;
-            foreach (Room room in roomGenerator.RoomList)
-            {
-                if (room.PositionInMap > highestPositionInMap) highestPositionInMap = room.PositionInMap;
-            }
-            string[] mapTiles = new string[highestPositionInMap + 1];
-
-
-            for (int i = 0; i < mapTiles.Length; i++)
-            {
-                if (roomGenerator.RoomList.Find(x => x.PositionInMap == i) == null) mapTiles[i] = "";
-                else if (i == currentRoom.PositionInMap)
-                {
-                    mapTiles[i] = "@";
-                }
-                else mapTiles[i] = "#";
-            }
-
-            for (int i = 0; i < 3; i ++)
-            {
-                for (int j = i; j < mapTiles.Length; j+=3)
-                {
-                    if (mapTiles[j] == "") Console.Write("   ");
-                    else Console.Write("[{0}]", mapTiles[j]); 
-                }
-                Console.WriteLine();
-            }
-        }
-
-        private void CreaturesInRoomBar()
-        {
-            if (!(currentRoom.Enemy == null))
-            {
-                Printer.Print("Enemy: ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Printer.Print(currentRoom.Enemy.Name);
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Printer.Print(" | hp: " + currentRoom.Enemy.Hp);
-            }
-            else
-            {
-                Printer.Print("Enemy: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Printer.Print("None");
-                Console.ForegroundColor = ConsoleColor.Gray;
-            }
-
-            Printer.Print(" | ");
-
-            if (!(currentRoom.NPC == null))
-            {
-                Printer.Print("NPC: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Printer.Print(currentRoom.NPC.Name);
-                Console.ForegroundColor = ConsoleColor.Gray;
-            }
-            else
-            {
-                Printer.Print("NPC: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Printer.Print("None");
-                Console.ForegroundColor = ConsoleColor.Gray;
-            }
-
-            Printer.PrintLine("");
-        }
-
-        private void StatBar() //skriver status bar med info om spelaren
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Printer.Print(".:| {5}s hp: {0} | Armor: {4} | Stamina: {1} | Damage {6}-{7} | gp: {2} | Exp to level: {3} | Exits: ", playerCharacter.Hp, playerCharacter.Stamina, PlayerCharacter.AmountOfMoney, (playerCharacter.ExpRequieredToLevelUp - playerCharacter.Exp), playerCharacter.ArmorRating, playerCharacter.Name, playerCharacter.MinDamage, playerCharacter.MaxDamage);
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Printer.Print(currentRoom.GetExitsAsString());
-
-            Console.ForegroundColor = ConsoleColor.White;
-            Printer.PrintLine("|:.");
-
-            Console.ForegroundColor = ConsoleColor.Gray;
-
-        }
-
-        private void RoomDescription() //beskriver rummet 
-        {
-            if (newLocation == true)
-            {
-                newLocation = false;
-                Printer.ClearRoomHistory();
-            }
-            Printer.PrintLine(currentRoom.RoomDescription);
-
-        }
-
+        
         private void checkAction(string action) //tar emot ett kommando från spelaren och jämför det med de möjliga tillåtna kommandon 
         {
             Printer.PrintLine("");
@@ -210,11 +113,10 @@ namespace TextDungeon
             }
 
             if (CharacterScreen(action)) return;
-
-
+            
             if (action.Equals("help"))
             {
-                HelpScreen();
+                Graphics.HelpScreen();
                 return;
             }
 
@@ -305,8 +207,6 @@ namespace TextDungeon
 
         }
 
-        #region Screens
-
         private bool CharacterScreen(string action)
         {
             if (action.Equals("Character") || action.Equals("c") || action.Equals("inventory") || action.Equals("i"))
@@ -316,10 +216,10 @@ namespace TextDungeon
                 {
                     Console.Clear();
                     Console.WriteLine(playerCharacter.Name);
-                    CharacterStatScreen();
-                    EquipmentScreen();
-                    CharacterInfoScreen();
-                    List<Item> uniqueItems = InventoryScreen();
+                    Graphics.CharacterStatScreen(playerCharacter);
+                    Graphics.EquipmentScreen(playerCharacter);
+                    Graphics.CharacterInfoScreen(playerCharacter);
+                    List<Item> uniqueItems = Graphics.InventoryScreen();
                     Console.WriteLine("What Would you like to do? (q to exit)");
                     command = Console.ReadLine().ToLower();
                     if (UsePotion(command)) Console.ReadKey(true);
@@ -330,82 +230,6 @@ namespace TextDungeon
                 return true;
             }
             return false;
-        }
-
-        private void CharacterInfoScreen()
-        {
-            int row = 1;
-            int column = 0;
-
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Hp : {0}/{1}", playerCharacter.Hp, playerCharacter.MaxHp);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Stamina : {0}/{1}", playerCharacter.Stamina, playerCharacter.MaxStamina);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Armor Rating : {0}", playerCharacter.ArmorRating);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Damage : {0}-{1}", playerCharacter.MinDamage, playerCharacter.MaxDamage);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Gp : {0}", PlayerCharacter.AmountOfMoney);
-
-            Console.SetCursorPosition(0, row + 1);
-        }
-
-        private void CharacterStatScreen()
-        {
-            int row = 1;
-            int column = 20;
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Level : {0}", playerCharacter.Level);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Exp : {0}/{1}", playerCharacter.Exp, playerCharacter.ExpRequieredToLevelUp);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Stats:");
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Happiness: {0}", playerCharacter.Happiness);
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Determination: {0}", playerCharacter.Determination);
-        }
-
-        private void EquipmentScreen()
-        {
-            int row = 1;
-            int column = 40;
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Equipment:");
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Armor: {0}", playerCharacter.EquiptedArmor != null ? playerCharacter.EquiptedArmor.Name : "None");
-            Console.SetCursorPosition(column, row++);
-            Console.WriteLine("Weapon: {0}", playerCharacter.EquiptedWeapon != null ? playerCharacter.EquiptedWeapon.Name : "None");
-
-        }
-
-        private List<Item> InventoryScreen()
-        {
-
-            List<Item> uniqueItems = new List<Item>();
-
-            if (PlayerCharacter.Inventory.ItemList.Count != 0)
-            {
-
-                Console.WriteLine("Your inventory contains: ");
-
-                foreach (Item item in PlayerCharacter.Inventory.ItemList)
-                {
-                    if ((uniqueItems.Find(x => x.Name == item.Name)) == null)
-                        uniqueItems.Add(item);
-                }
-
-                foreach (Item item in uniqueItems)
-                {
-                    List<Item> numberOfItems = PlayerCharacter.Inventory.ItemList.FindAll(x => x.Name == item.Name);
-                    Console.WriteLine(item.Name + " " + numberOfItems.Count);
-                }
-            }
-
-            else Console.WriteLine("Inventory is empty!");
-
-            return uniqueItems;
         }
 
         private bool Equipt(string command, List<Item> itemList)
@@ -470,19 +294,6 @@ namespace TextDungeon
 
             else return false;
         }
-
-        private void HelpScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("Commands in game:\n\"n\" to go north \n\"s\" to go south \n\"e\" to go east \n\"w\" to go west\n\n" +
-                "\"l\" to look around the current room \n\"t\" to take an item in the current room\n\"us\" to go up or down stairs\n\n" +
-                "\"help\" to get the helpscreen \n\"history\" to see everything that has happend \n\"rh\" to see what has happend in this room\n" +
-                "\"q\" to see current quest \n\n\"talk\" to talk to Npcs\n" +
-                "\"c\" to open the character screen, \n\"p\" to use potion\n\"Equipt name\" to equipt something with that name\n\n\"a\" to attack \n\"sa\" to do a strong attack");
-            Console.ReadKey(true);
-        }
-
-        #endregion
 
         #region Actions (alla tillåtna kommandos)
 

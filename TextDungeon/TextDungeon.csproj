@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics.cs" />
     <Compile Include="Models\Items\Equipment\Armor.cs" />
     <Compile Include="DataStores\Connection.cs" />
     <Compile Include="Models\Creatures\Creature.cs" />
